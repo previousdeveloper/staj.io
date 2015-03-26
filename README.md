@@ -2,8 +2,8 @@
 
 Türkiyede stajyer alan firmaların bilgileri listeleyen uygulamadır.
 
-[Türkçe versiyon](https://github.com/previousdeveloper/staj.io/edit/master/README.md)
+[Türkçe versiyon](https://github.com/previousdeveloper/staj.io/blob/master/README.md)
 
-[English version](https://github.com/previousdeveloper/staj.io/edit/master/README_ENG.md)
+[English version](https://github.com/previousdeveloper/staj.io/blob/master/README_ENG.md)
 
 
