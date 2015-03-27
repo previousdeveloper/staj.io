@@ -9,7 +9,7 @@ module.exports = {
 
     app: {
         name: 'staj.io',
-        port: 3001,
+        port: 3000,
         dbURL: 'mongodb://localhost:27017/staj'
     }
 

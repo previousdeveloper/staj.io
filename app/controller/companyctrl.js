@@ -36,8 +36,14 @@ module.exports = function (app) {
 
 
     app.get('/getSectorAndCity/:sector/:city', function (req, res) {
-        Company.findOne({'sector': req.params.sector, 'city': req.params.city},
+
+        var sector = req.params.sector;
+        var city = req.params.city;
+
+
+        Company.findOne({'sector': sector, 'city': city},
             'name email address city', function (err, person) {
+
                 if (err) {
                     res.json(err);
                 }
@@ -45,4 +51,16 @@ module.exports = function (app) {
                 res.json(person);
             });
     });
+
+
+    // catch-all
+    app.get('*', function (req, res) {
+        res.status(404).json({message: 'Invalid GET request'})
+    });
+    app.post('*', function (req, res) {
+        res.status(404).json({message: 'Invalid POST request'})
+    });
+    app.delete('*', function (req, res) {
+        res.status(404).json({message: 'Invalid DELETE request'})
+    })
 };

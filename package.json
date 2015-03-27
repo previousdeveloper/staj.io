@@ -9,6 +9,7 @@
     "express": "^4.12.2",
     "forever": "^0.14.1",
     "mongoose": "~3.8.8",
+    "nodemon": "^1.3.7",
     "winston": "^0.9.0"
   },
   "repository": {
