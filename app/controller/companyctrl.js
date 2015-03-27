@@ -2,9 +2,7 @@
  * Created by gokhan on 3/26/15.
  */
 var mongoose = require('mongoose');
-
 var Company = require('../models/company');
-
 
 module.exports = function (app) {
     var company = new Company();
@@ -21,7 +19,7 @@ module.exports = function (app) {
             if (err)
                 res.send(err);
 
-            res.json(company);
+            res.json(res.statusCode);
         });
     });
 
@@ -34,9 +32,17 @@ module.exports = function (app) {
             }
             res.send(company);
         });
-
-
     });
 
-   
+
+    app.get('/getSectorAndCity/:sector/:city', function (req, res) {
+        Company.findOne({'sector': req.params.sector, 'city': req.params.city},
+            'name email address city', function (err, person) {
+                if (err) {
+                    res.json(err);
+                }
+
+                res.json(person);
+            });
+    });
 };
