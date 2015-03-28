@@ -13,9 +13,8 @@ var companySchema = new Schema({
     email: String,
     address: String,
     websiteUrl: String,
-    phone: String
-
-
+    phone: String,
+    imgurl: String
 });
 
 module.exports = mongoose.model('Company', companySchema);

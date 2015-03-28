@@ -51,8 +51,6 @@ module.exports = function (app) {
                 res.json(person);
             });
     });
-
-
     // catch-all
     app.get('*', function (req, res) {
         res.status(404).json({message: 'Invalid GET request'})
