@@ -4,27 +4,32 @@
 var mongoose = require('mongoose');
 var Company = require('../models/company');
 
+
 module.exports = function (app) {
     var company = new Company();
 
-    app.post("/addcompany", function (req, res) {
-
+    app.post("/api/addcompany", function (req, res) {
         company.name = req.body.name;
         company.address = req.body.address;
         company.email = req.body.email;
         company.websiteUrl = req.body.websiteUrl;
         company.city = req.body.city;
+        company.sector = req.body.sector;
+        company.information = req.body.information;
+        company.imgurl = req.body.imgurl;
 
         company.save(function (err) {
             if (err)
                 res.send(err);
 
             res.json(res.statusCode);
+
+
         });
     });
 
 
-    app.get('/getAllCompany', function (req, res) {
+    app.get('/api/getAllCompany', function (req, res) {
         mongoose.model('Company').find(function (err, company) {
 
             if (err) {
@@ -35,7 +40,7 @@ module.exports = function (app) {
     });
 
 
-    app.get('/getSectorAndCity/:sector/:city', function (req, res) {
+    app.get('/api/getSectorAndCity/:sector/:city', function (req, res) {
 
         var sector = req.params.sector;
         var city = req.params.city;
@@ -51,6 +56,18 @@ module.exports = function (app) {
                 res.json(person);
             });
     });
+
+
+    app.delete('/api/deleteCompany/:id', function (req, res) {
+
+        Company.remove({_id: req.params.id}, function (err) {
+            if (err) {
+                res.json(err);
+            }
+            res.json({message: 'Successfully deleted'});
+        });
+    });
+
     // catch-all
     app.get('*', function (req, res) {
         res.status(404).json({message: 'Invalid GET request'})
@@ -60,5 +77,6 @@ module.exports = function (app) {
     });
     app.delete('*', function (req, res) {
         res.status(404).json({message: 'Invalid DELETE request'})
-    })
+    });
+
 };
