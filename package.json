@@ -1,19 +1,48 @@
 {
-  "name": "staj.io",
-  "private": true,
-  "readme": "README.md",
-  "version": "0.0.1",
-  "dependencies": {
-    "aws-sdk": "^2.1.17",
-    "body-parser": "^1.12.2",
-    "express": "^4.12.2",
-    "forever": "^0.14.1",
-    "mongoose": "~3.8.8",
-    "nodemon": "^1.3.7",
-    "winston": "^0.9.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/previousdeveloper/staj.io.git"
-  }
+    "name": "Staj.io",
+    "version": "1.0.0",
+    "author": "Gokhan Karadas",
+    "description": "Türkiyedeki tüm stajları listeyen back-end servisi",
+    "private": true,
+    "scripts": {
+        "start": "node ./bin/www"
+    },
+    "dependencies": {
+        "body-parser": "~1.8.x",
+        "cookie-parser": "~1.3.x",
+        "debug": "~2.0.x",
+        "express": "~4.10.x",
+        "faker": "^2.0.x",
+        "method-override": "^2.3.x",
+        "mongoose": "3.8",
+        "nconf": "^0.6.x",
+        "oauth2orize": "^1.0.x",
+        "passport": "^0.2.x",
+        "passport-http": "^0.2.x",
+        "passport-http-bearer": "^1.0.x",
+        "passport-oauth2-client-password": "^0.1.x",
+        "winston": "^0.8.x"
+    },
+    "jshintConfig":{
+        "curly": true,
+        "eqeqeq": true,
+        "immed": true,
+        "latedef": false,
+        "newcap": false,
+        "noarg": true,
+        "sub": true,
+        "undef": true,
+        "boss": true,
+        "eqnull": true,
+        "strict": false,
+        "scripturl": true,
+        "evil": true,
+        "globals" : {
+            "location": true,
+            "printStackTrace": false
+        },
+        "browser" : true,
+        "node": true
+    },
+    "license": "MIT"
 }
