@@ -22,6 +22,12 @@ http POST http://localhost:1337/api/oauth/token grant_type=password client_id=an
 http POST http://localhost:1337/api/oauth/token grant_type=refresh_token client_id=android client_secret=SomeRandomCharsAndNumbers refresh_token=[TOKEN]
 ```
 
+## Todo
+
+1.Android Client for api.
+2.Ios Client for api.
+3.Web Application.
+
 ## Contributing
 
 1. Fork it
