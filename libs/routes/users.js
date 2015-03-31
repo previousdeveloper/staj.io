@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var libs = process.cwd() + '/libs/';
-var User = require(libs + 'model/user');
+var User = require(libs + 'model/users');
 
 
 router.post('/signUp', function (req, res) {

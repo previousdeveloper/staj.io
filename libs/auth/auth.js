@@ -7,7 +7,7 @@ var libs = process.cwd() + '/libs/';
 
 var config = require(libs + 'config');
 
-var User = require(libs + 'model/user');
+var User = require(libs + 'model/users');
 var Client = require(libs + 'model/client');
 var AccessToken = require(libs + 'model/accessToken');
 var RefreshToken = require(libs + 'model/refreshToken');
