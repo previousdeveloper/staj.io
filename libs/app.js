@@ -29,6 +29,8 @@ app.use(methodOverride());
 app.use(passport.initialize());
 app.use(roles.middleware());
 
+
+//Admin can access for company information.
 roles.use('company', function (req) {
     if ("admin" === req.user._doc.role) return true;
 });
@@ -42,7 +44,7 @@ app.use('/api', company);
 app.use('/api/backend', passport.authenticate('bearer', {session: false}), roles.can('company'), backendCompany);
 
 
-app.use(function (req, res, next) {
+app.use(function (req, res) {
     res.status(404);
     log.debug('%s %d %s', req.method, res.statusCode, req.url);
     res.json({
@@ -51,7 +53,7 @@ app.use(function (req, res, next) {
     return;
 });
 
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
     res.status(err.status || 500);
     log.error('%s %d %s', req.method, res.statusCode, err.message);
     res.json({
