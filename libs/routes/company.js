@@ -4,15 +4,30 @@
 var express = require('express');
 var router = express.Router();
 var Company = require('../model/company');
+var NodeCache = require("node-cache");
 
+
+var myCache = new NodeCache();
+
+
+//Get All Company List
+Company.find(function (err, company) {
+
+    if (err) {
+        return res.json(err);
+    }
+    myCache.set('getAllCompany', company, function (err, success) {
+        if (!err && success) {
+
+        }
+    });
+});
 
 router.get('/getAllCompany', function (req, res) {
-    Company.find(function (err, company) {
-
-        if (err) {
-            res.json(err);
+    myCache.get("getAllCompany", function (err, value) {
+        if (!err) {
+            res.json(value);
         }
-        res.send(company);
     });
 });
 
@@ -22,12 +37,11 @@ router.get('/getSectorAndCity/:sector/:city', function (req, res) {
     var sector = req.params.sector;
     var city = req.params.city;
 
-    Company.findOne({'sector': sector, 'city': city},
-        'name email address city', function (err, person) {
+    Company.find({'sector': sector, 'city': city}, function (err, company) {
             if (err) {
-                res.json(err);
+                return res.json(err);
             }
-            res.json(person);
+            res.json(company);
         });
 });
 

@@ -4,8 +4,9 @@
 var express = require('express');
 var router = express.Router();
 var Company = require('../../model/company');
-var passport = require('passport');
+var libs = process.cwd() + '/libs/';
 
+var log = require(libs + 'log')(module);
 
 router.post("/addcompany", function (req, res) {
     var company = new Company();
@@ -20,9 +21,11 @@ router.post("/addcompany", function (req, res) {
     company.imgurl = req.body.imgurl;
 
     company.save(function (err) {
-        if (err)
+        if (err) {
+            log.error('Error saving company' + err);
             return res.send(err);
-        res.json(res.statusCode);
+        }
+        res.json({message: 'Company is added', status_code: res.status_code});
     });
 });
 
@@ -31,9 +34,10 @@ router.delete('/deleteCompany/:id', function (req, res) {
 
     Company.remove({_id: req.params.id}, function (err) {
         if (err) {
-            res.json(err);
+            log.error('Error deleting company with:' + {id: req.params.id} + err);
+            return res.json(err);
         }
-        res.json({message: 'Successfully deleted'});
+        res.json({message: req.params.id + ':Successfully deleted'});
     });
 });
 
@@ -42,6 +46,7 @@ router.put('/changeCompany/:id', function (req, res) {
 
     Company.findById(req.params.id, function (err, company) {
         if (err) {
+            log.error('Updated  company :' + {id: req.params.id} + err);
             return res.json(err);
         }
         company.name = req.body.name;
