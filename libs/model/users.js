@@ -1,11 +1,12 @@
 /**
  * Created by gokhan on 4/1/15.
  */
+'use strict';
+
 var mongoose = require('mongoose'),
     crypto = require('crypto'),
 
     Schema = mongoose.Schema,
-
 
     User = new Schema({
         username: {
@@ -24,8 +25,12 @@ var mongoose = require('mongoose'),
         created: {
             type: Date,
             default: Date.now
+        },
+        role: {
+            type: String
         }
     });
+
 
 User.methods.encryptPassword = function (password) {
     return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
@@ -53,6 +58,7 @@ User.virtual('password')
 User.methods.checkPassword = function (password) {
     return this.encryptPassword(password) === this.hashedPassword;
 };
+
 
 module.exports = mongoose.model('User', User);
 

@@ -6,7 +6,7 @@ var log = require(libs + 'log')(module);
 var db = require(libs + 'db/mongoose');
 var config = require(libs + 'config');
 
-var User = require(libs + 'model/user');
+var User = require(libs + 'model/users');
 var Client = require(libs + 'model/client');
 var AccessToken = require(libs + 'model/accessToken');
 var RefreshToken = require(libs + 'model/refreshToken');
