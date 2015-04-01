@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var methodOverride = require('method-override');
+var ConnectRoles = require('connect-roles');
 var libs = process.cwd() + '/libs/';
 require(libs + 'auth/auth');
 
@@ -18,12 +19,19 @@ var backendCompany = require('./routes/backends/company');
 
 var app = express();
 
+var roles = new ConnectRoles();
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(methodOverride());
 app.use(passport.initialize());
+app.use(roles.middleware());
+
+roles.use('company', function (req) {
+    if ("admin" === req.user._doc.role) return true;
+});
 
 app.use('/', api);
 app.use('/api', api);
@@ -31,7 +39,7 @@ app.use('/api/', users);
 app.use('/api/oauth/token', oauth2.token);
 app.use('/api', users);
 app.use('/api', company);
-app.use('/api', backendCompany);
+app.use('/api/backend', passport.authenticate('bearer', {session: false}), roles.can('company'), backendCompany);
 
 
 app.use(function (req, res, next) {

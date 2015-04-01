@@ -7,7 +7,7 @@ var Company = require('../../model/company');
 var passport = require('passport');
 
 
-router.post("/addcompany", passport.authenticate('bearer', {session: false}), function (req, res) {
+router.post("/addcompany", function (req, res) {
     var company = new Company();
 
     company.name = req.body.name;
@@ -27,7 +27,7 @@ router.post("/addcompany", passport.authenticate('bearer', {session: false}), fu
 });
 
 
-router.delete('/deleteCompany/:id', passport.authenticate('bearer', {session: false}), function (req, res) {
+router.delete('/deleteCompany/:id', function (req, res) {
 
     Company.remove({_id: req.params.id}, function (err) {
         if (err) {
@@ -38,7 +38,7 @@ router.delete('/deleteCompany/:id', passport.authenticate('bearer', {session: fa
 });
 
 
-router.put('/changeCompany/:id', passport.authenticate('bearer', {session: false}), function (req, res) {
+router.put('/changeCompany/:id', function (req, res) {
 
     Company.findById(req.params.id, function (err, company) {
         if (err) {
