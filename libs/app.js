@@ -9,7 +9,6 @@ var libs = process.cwd() + '/libs/';
 require(libs + 'auth/auth');
 
 //json web token
-var jwt = require("jsonwebtoken");
 
 
 var config = require('./config');
