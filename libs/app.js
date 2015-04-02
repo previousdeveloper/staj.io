@@ -8,6 +8,10 @@ var ConnectRoles = require('connect-roles');
 var libs = process.cwd() + '/libs/';
 require(libs + 'auth/auth');
 
+//json web token
+var jwt = require("jsonwebtoken");
+
+
 var config = require('./config');
 var log = require('./log')(module);
 var oauth2 = require('./auth/oauth2');
@@ -23,11 +27,19 @@ var roles = new ConnectRoles();
 
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(methodOverride());
 app.use(passport.initialize());
 app.use(roles.middleware());
+
+
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    next();
+});
 
 
 //Admin can access for company information.
