@@ -1,4 +1,3 @@
-var faker = require('faker');
 
 var libs = process.cwd() + '/libs/';
 

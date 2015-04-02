@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var Company = require('../../model/company');
 var libs = process.cwd() + '/libs/';
+var User = require('../../model/users');
 
 var log = require(libs + 'log')(module);
 
@@ -63,6 +64,17 @@ router.put('/changeCompany/:id', function (req, res) {
                 return res.send(err);
             res.json({message: 'Company updated.', status_code: res.statusCode});
         });
+    })
+});
+
+router.get('/totalUser', function (req, res) {
+
+    User.count({}, function (err, count) {
+        if (err) {
+            return res.json(err);
+        }
+        return res.json(count);
+
     })
 });
 
