@@ -15,9 +15,13 @@
     "debug": "~2.0.x",
     "express": "~4.10.x",
     "faker": "^2.0.x",
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.9.4",
+    "jshint": "^2.6.3",
     "method-override": "^2.3.x",
     "mongoose": "3.8",
     "nconf": "^0.6.x",
+    "node-cache": "^1.1.0",
     "oauth2orize": "^1.0.x",
     "passport": "^0.2.x",
     "passport-http": "^0.2.x",
@@ -46,5 +50,8 @@
     "browser": true,
     "node": true
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "gulp-jshint": "^1.9.4"
+  }
 }

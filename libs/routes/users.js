@@ -3,6 +3,13 @@ var router = express.Router();
 var libs = process.cwd() + '/libs/';
 var User = require(libs + 'model/users');
 
+var log = require(libs + 'log')(module);
+var db = require(libs + 'db/mongoose');
+var config = require(libs + 'config');
+
+var Client = require(libs + 'model/client');
+var AccessToken = require(libs + 'model/accessToken');
+var RefreshToken = require(libs + 'model/refreshToken');
 
 router.post('/signUp', function (req, res) {
     User.findOne({username: req.body.username}, function (err, user) {
@@ -32,6 +39,8 @@ router.post('/signUp', function (req, res) {
             }
         }
     });
+
+
 });
 
 module.exports = router;

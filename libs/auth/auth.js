@@ -46,7 +46,6 @@ passport.use(new ClientPasswordStrategy(
             if (client.clientSecret !== clientSecret) {
                 return done(null, false);
             }
-
             return done(null, client);
         });
     }
