@@ -12,7 +12,7 @@ var log = require(libs + 'log')(module);
 router.post("/addcompany", function (req, res) {
     var company = new Company();
 
-        company.name = req.body.name;
+    company.name = req.body.name;
     company.address = req.body.address;
     company.email = req.body.email;
     company.websiteUrl = req.body.websiteUrl;
@@ -90,9 +90,6 @@ router.get('/getTotalCompany', function (req, res) {
         return res.json(companyCount);
     })
 });
-
-
-
 
 
 module.exports = router;

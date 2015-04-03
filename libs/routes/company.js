@@ -1,7 +1,3 @@
-/**
- * Created by gokhan on 3/31/15.
- */
-
 var express = require('express');
 var router = express.Router();
 var Company = require('../model/company');
@@ -14,22 +10,24 @@ var myCache = new NodeCache();
 
 
 //Get All Company List
-Company.find(function (err, company) {
+Company.find(function (err, results) {
 
     if (err) {
+        log.error('Error  getting all company list' + err);
         return res.json(err);
     }
-    myCache.set('getAllCompany', company, function (err, success) {
+    myCache.set('getAllCompany', results, function (err, success) {
         if (!err && success) {
 
+            log.info(success);
         }
     });
 });
 
 router.get('/getAllCompany', function (req, res) {
-    myCache.get("getAllCompany", function (err, value) {
+    myCache.get("getAllCompany", function (err, results) {
         if (!err) {
-            res.json(value);
+            return res.json(results);
         }
     });
 });
@@ -40,11 +38,11 @@ router.get('/getSectorAndCity/:sector/:city', function (req, res) {
     var sector = req.params.sector;
     var city = req.params.city;
 
-    Company.find({'sector': sector, 'city': city}, function (err, company) {
+    Company.find({'sector': sector, 'city': city}, function (err, results) {
         if (err) {
             return res.json(err);
         }
-        res.json(company);
+        res.json(results);
     });
 });
 
@@ -53,15 +51,28 @@ router.get('/getSector/:sector', function (req, res) {
 
     var sector = req.params.sector;
 
-    Company.find({'sector': sector}, function (err, company) {
+    Company.find({'sector': sector}, function (err, results) {
 
         if (err) {
             log.error('error getSector' + err);
             return res.json(err);
         }
-        return res.json(company);
+        return res.json(results);
     });
+});
 
+router.get('/getCity/:city', function (req, res) {
+
+    var city = req.params.city;
+
+    Company.find({'city': city}, function (err, results) {
+
+        if (err) {
+            log.error('error getSector' + err);
+            return res.json(err);
+        }
+        return res.json(results);
+    });
 });
 
 module.exports = router;

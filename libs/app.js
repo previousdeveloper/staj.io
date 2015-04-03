@@ -19,7 +19,7 @@ var company = require('./routes/company');
 var api = require('./routes/api');
 var users = require('./routes/users');
 var backendCompany = require('./routes/backends/company');
-
+var elasticsearch = require('./routes/elasticsearch');
 var app = express();
 
 var roles = new ConnectRoles();
@@ -52,6 +52,7 @@ app.use('/api/', users);
 app.use('/api/oauth/token', oauth2.token);
 app.use('/api', users);
 app.use('/api', company);
+app.use('/api', elasticsearch);
 app.use('/api/backend', passport.authenticate('bearer', {session: false}), roles.can('company'), backendCompany);
 
 

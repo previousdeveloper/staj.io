@@ -15,13 +15,13 @@ var RefreshToken = require(libs + 'model/refreshToken');
 router.post('/signUp', function (req, res) {
     User.findOne({username: req.body.username}, function (err, user) {
         if (err) {
-            res.json({
+            return res.json({
                 type: false,
                 data: "Error occured: " + err
             });
         } else {
             if (user) {
-                res.json({
+                return res.json({
                     type: false,
                     data: "User already exists!"
                 });
@@ -38,9 +38,7 @@ router.post('/signUp', function (req, res) {
                     });
                 });
 
-                var client = new Client({
-
-                });
+                var client = new Client({});
 
                 client.save(function (err, client) {
 

@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
             type: String,
             unique: true,
             required: true,
-            default:'client'
+            default: 'client'
         },
         clientId: {
             type: String,
