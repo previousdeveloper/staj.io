@@ -11,6 +11,7 @@ var Client = require(libs + 'model/client');
 var AccessToken = require(libs + 'model/accessToken');
 var RefreshToken = require(libs + 'model/refreshToken');
 
+
 router.post('/signUp', function (req, res) {
     User.findOne({username: req.body.username}, function (err, user) {
         if (err) {
@@ -35,7 +36,21 @@ router.post('/signUp', function (req, res) {
                             data: user1.username
                         });
                     });
-                })
+                });
+
+                var client = new Client({
+
+                });
+
+                client.save(function (err, client) {
+
+                    if (!err) {
+                        log.info("New client - %s:%s", client.clientId, client.clientSecret);
+                    } else {
+                        return log.error(err);
+                    }
+
+                });
             }
         }
     });
