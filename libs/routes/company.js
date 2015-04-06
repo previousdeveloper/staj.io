@@ -8,8 +8,6 @@ var log = require(libs + 'log')(module);
 
 var myCache = new NodeCache();
 
-
-//Get All Company List
 Company.find(function (err, results) {
 
     if (err) {
