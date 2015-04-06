@@ -52,8 +52,6 @@ router.post('/signUp', function (req, res) {
             }
         }
     });
-
-
 });
 
 module.exports = router;
