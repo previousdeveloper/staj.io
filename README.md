@@ -1,13 +1,14 @@
 # staj.io
-
 Türkiyede stajyer alan firmaların bilgileri listeleyen uygulamadır.
 
 [Türkçe versiyon](https://github.com/previousdeveloper/staj.io/blob/master/README.md)
 
 [English version](https://github.com/previousdeveloper/staj.io/blob/master/README_ENG.md)
 
-### Status
-[![Build Status](https://magnum-ci.com/status/962be120e085cfec6a6660ce3d5202f7.png)](https://magnum-ci.com/projects/2624)
+### Staj
+[![Build Status](https://magnum-ci.com/status/962be120e085cfec6a6660ce3d5202f7.png)](https://magnum-ci.com/projects/2624)   [![Gittip](http://img.shields.io/gratipay/previousdeveloper.svg)](https://www.gittip.com/previousdeveloper/)
+
+
 ### Run server
 
 To run server execute:
