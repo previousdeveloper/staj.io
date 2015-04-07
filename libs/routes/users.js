@@ -6,6 +6,7 @@ var User = require(libs + 'model/users');
 var log = require(libs + 'log')(module);
 var db = require(libs + 'db/mongoose');
 var config = require(libs + 'config');
+var passport = require('passport');
 
 var Client = require(libs + 'model/client');
 var AccessToken = require(libs + 'model/accessToken');
@@ -37,9 +38,7 @@ router.post('/signUp', function (req, res) {
                         });
                     });
                 });
-
                 var client = new Client({});
-
                 client.save(function (err, client) {
 
                     if (!err) {
@@ -52,6 +51,50 @@ router.post('/signUp', function (req, res) {
             }
         }
     });
+
+
+});
+
+
+router.post('/changePassword', passport.authenticate('bearer', {session: false}), function (req, res) {
+
+    if (req.user) {
+        User.findOne({_id: req.user.id}, function (err, user) {
+
+            if (user.password != req.body.password) {
+                return res.json('wrong password');
+            }
+            else {
+                user.password = req.body.newpassword;
+                user.save(function (err) {
+                    if (err) {
+                        return res.json(err);
+                    } else {
+                        return res.json({message: 'Password changed.'})
+                    }
+                });
+            }
+
+
+        });
+    }
+});
+
+
+router.post('/updateInformation', passport.authenticate('bearer', {session: false}), function (req, res) {
+
+    if (req.user) {
+        User.findOne({_id: req.user.id}, function (err, user) {
+            user.email = req.body.email;
+            user.save(function (err) {
+                if (err) {
+                    return res.json(err);
+                } else {
+                    return res.json({message: 'Email added.'})
+                }
+            });
+        });
+    }
 });
 
 module.exports = router;

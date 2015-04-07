@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// AccessToken
+
 var AccessToken = new Schema({
     userId: {
         type: String,
