@@ -1,5 +1,4 @@
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
@@ -8,7 +7,6 @@ var ConnectRoles = require('connect-roles');
 var libs = process.cwd() + '/libs/';
 require(libs + 'auth/auth');
 
-//json web token
 
 
 var config = require('./config');
@@ -41,7 +39,6 @@ app.use(function (req, res, next) {
 });
 
 
-//Admin can access for company information.
 roles.use('company', function (req) {
     if ("admin" === req.user._doc.role) return true;
 });

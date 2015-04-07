@@ -27,7 +27,13 @@ var mongoose = require('mongoose'),
             default: Date.now
         },
         role: {
-            type: String
+            type: String,
+            default: 'User'
+        },
+        email: {
+            type: String,
+            unique: true
+
         }
     });
 
