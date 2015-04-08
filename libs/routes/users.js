@@ -27,33 +27,40 @@ router.post('/signUp', function (req, res) {
                     data: "User already exists!"
                 });
             } else {
-                var userModel = new User();
-                userModel.username = req.body.username;
-                userModel.password = req.body.password;
-                userModel.save(function (err, user) {
-                    user.save(function (err, user1) {
-                        res.json({
-                            type: true,
-                            data: user1.username
-                        });
+
+                if (req.body.username != '' && req.body.password != '' && req.body.password.length > 3) {
+                    var userModel = new User();
+                    userModel.username = req.body.username;
+                    userModel.password = req.body.password;
+                    userModel.save(function (err, user) {
+                            res.json({
+                                type: true,
+                                data: user.username
+                            });
+                        }
+                    );
+                    var client = new Client({});
+                    client.save(function (err, client) {
+
+                        if (!err) {
+                            log.info("New client - %s:%s", client.clientId, client.clientSecret);
+                        } else {
+                            return log.error(err);
+                        }
+
                     });
-                });
-                var client = new Client({});
-                client.save(function (err, client) {
+                } else {
+                    res.json('Username or Password Not Be Empty.')
+                }
 
-                    if (!err) {
-                        log.info("New client - %s:%s", client.clientId, client.clientSecret);
-                    } else {
-                        return log.error(err);
-                    }
 
-                });
             }
         }
     });
 
 
-});
+})
+;
 
 
 router.post('/changePassword', passport.authenticate('bearer', {session: false}), function (req, res) {
