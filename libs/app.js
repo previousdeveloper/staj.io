@@ -18,9 +18,7 @@ var users = require('./routes/users');
 var backendCompany = require('./routes/backends/company');
 var elasticsearch = require('./routes/elasticsearch');
 var app = express();
-
 var roles = new ConnectRoles();
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -33,7 +31,7 @@ app.use(roles.middleware());
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     res.header('Content-Type', 'application/json');
     next();
 });
@@ -43,14 +41,14 @@ roles.use('company', function (req) {
     if ("admin" === req.user._doc.role) return true;
 });
 
-app.use('/', api);
-app.use('/api', api);
-app.use('/api/', users);
-app.use('/api/oauth/token', oauth2.token);
-app.use('/api', users);
-app.use('/api', company);
-app.use('/api', elasticsearch);
-app.use('/api/backend', passport.authenticate('bearer', {session: false}), roles.can('company'), backendCompany);
+app.use('/v1', api);
+app.use(config.get('api_version'), api);
+app.use(config.get('api_version'), users);
+app.use(config.get('api_version') + '/oauth/token', oauth2.token);
+app.use(config.get('api_version'), users);
+app.use(config.get('api_version'), company);
+app.use(config.get('api_version'), elasticsearch);
+app.use('/api/v1/backend', passport.authenticate('bearer', {session: false}), roles.can('company'), backendCompany);
 
 
 app.use(function (req, res) {

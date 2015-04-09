@@ -14,7 +14,7 @@ Company.find(function (err, results) {
         log.error('Error  getting all company list' + err);
         return res.json(err);
     }
-    myCache.set('companylist', results, function (err, success) {
+    myCache.set('companyList', results, function (err, success) {
         if (!err && success) {
 
             log.info(success);
@@ -23,7 +23,7 @@ Company.find(function (err, results) {
 });
 
 router.get('/company', function (req, res) {
-    myCache.get("companylist", function (err, results) {
+    myCache.get("companyList", function (err, results) {
         if (!err) {
             return res.json(results);
         }
@@ -45,7 +45,7 @@ router.get('/sectorAndCity/:sector/:city', function (req, res) {
 });
 
 
-router.get('/company', function (req, res) {
+router.get('/companies', function (req, res) {
     var perPage = 5
         , page = req.param('page') > 0 ? req.param('page') : 0;
     Company
@@ -54,11 +54,16 @@ router.get('/company', function (req, res) {
         .skip(perPage * page)
         .exec(function (err, events) {
             Company.count().exec(function (err, count) {
-                res.json('events', {
-                    events: events
-                    , page: page
-                    , pages: count / perPage
-                })
+                if(err){
+                    return res.json('Hata Meydana Geldi.');
+                }else{
+                    res.json('events', {
+                        events: events
+                        , page: page
+                        , pages: count / perPage
+                    });
+                }
+
             })
         })
 });

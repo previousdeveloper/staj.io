@@ -3,13 +3,11 @@
  */
 'use strict';
 
-
+var company = require('./company');
 var mongoose = require('mongoose'),
     crypto = require('crypto'),
 
-
     Schema = mongoose.Schema,
-
 
     User = new Schema({
 
@@ -43,10 +41,10 @@ var mongoose = require('mongoose'),
             type: String,
             required: true,
             min: 5
-        }
+        },
+        followedCompanies: [company]
+
     });
-
-
 
 
 User.methods.encryptPassword = function (password) {

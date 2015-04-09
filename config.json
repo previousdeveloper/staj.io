@@ -1,7 +1,8 @@
 {
   "port": 3000,
+  "api_version":"/api/v1",
   "security": {
-    "tokenLife": 3500
+    "tokenLife": 150000
   },
   "mongoose": {
     "uri": "mongodb://localhost/staj"
