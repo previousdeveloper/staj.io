@@ -3,12 +3,16 @@
  */
 'use strict';
 
+
 var mongoose = require('mongoose'),
     crypto = require('crypto'),
 
+
     Schema = mongoose.Schema,
 
+
     User = new Schema({
+
         username: {
             type: String,
             unique: true,
@@ -32,10 +36,17 @@ var mongoose = require('mongoose'),
         },
         email: {
             type: String,
-            unique: true
-
+            required: true,
+            min: 5
+        },
+        name: {
+            type: String,
+            required: true,
+            min: 5
         }
     });
+
+
 
 
 User.methods.encryptPassword = function (password) {

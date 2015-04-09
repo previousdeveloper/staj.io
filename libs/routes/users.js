@@ -14,35 +14,44 @@ var RefreshToken = require(libs + 'model/refreshToken');
 
 
 router.post('/signUp', function (req, res) {
-    User.findOne({username: req.body.username}, function (err, user) {
+    User.findOne({username: req.body.username}, function (err, currentUser) {
         if (err) {
             return res.json({
                 type: false,
-                data: "Error occured: " + err
+                data: "Hata meydana geldi" + err
             });
         } else {
-            if (user) {
+            if (currentUser) {
                 return res.json({
                     type: false,
-                    data: "User already exists!"
+                    data: "Kullanıcı mevcut"
                 });
             } else {
 
                 if (req.body.username != '' && req.body.password != '' && req.body.password.length > 3) {
-                    var userModel = new User();
-                    userModel.username = req.body.username;
-                    userModel.password = req.body.password;
-                    userModel.save(function (err, user) {
-                            res.json({
-                                type: true,
-                                data: user.username
-                            });
+                    var newUser = new User();
+                    newUser.username = req.body.username;
+                    newUser.password = req.body.password;
+
+                    //Todo:Refactor check email and name empty
+                    newUser.email = req.body.email;
+                    newUser.name = req.body.name;
+                    newUser.save(function (err) {
+                        if (err) {
+                            return res.json(err);
                         }
-                    );
-                    var client = new Client({});
+                    });
+                    var client = new Client();
+                    client.clientId = 'client';
+                    client.clientSecret = 'client';
+                    client.name = 'client';
                     client.save(function (err, client) {
 
                         if (!err) {
+                            res.json({
+                                type: false,
+                                data: 'kullanıcı başarıyla oluşturuldu'
+                            });
                             log.info("New client - %s:%s", client.clientId, client.clientSecret);
                         } else {
                             return log.error(err);
@@ -50,7 +59,7 @@ router.post('/signUp', function (req, res) {
 
                     });
                 } else {
-                    res.json('Username or Password Not Be Empty.')
+                    res.json('Kullanıcı adı veya şifre boş olamaz')
                 }
 
 
@@ -59,8 +68,7 @@ router.post('/signUp', function (req, res) {
     });
 
 
-})
-;
+});
 
 
 router.post('/changePassword', passport.authenticate('bearer', {session: false}), function (req, res) {

@@ -14,7 +14,7 @@ Company.find(function (err, results) {
         log.error('Error  getting all company list' + err);
         return res.json(err);
     }
-    myCache.set('companies', results, function (err, success) {
+    myCache.set('companylist', results, function (err, success) {
         if (!err && success) {
 
             log.info(success);
@@ -23,7 +23,7 @@ Company.find(function (err, results) {
 });
 
 router.get('/company', function (req, res) {
-    myCache.get("companies", function (err, results) {
+    myCache.get("companylist", function (err, results) {
         if (!err) {
             return res.json(results);
         }
@@ -45,7 +45,7 @@ router.get('/sectorAndCity/:sector/:city', function (req, res) {
 });
 
 
-router.get('/limit2', function (req, res) {
+router.get('/company', function (req, res) {
     var perPage = 5
         , page = req.param('page') > 0 ? req.param('page') : 0;
     Company
@@ -64,18 +64,11 @@ router.get('/limit2', function (req, res) {
 });
 
 
-router.get('/limit', function (req, res) {
 
-    var pagesize = req.query.pagesize;
-    Company.find().skip(5).limit(pagesize).exec(function (err, post) {
-        console.log(pagesize);
-        res.json(post);
-    });
-});
 
-router.get('/getSector/:sector', function (req, res) {
+router.get('/sector/:sector', function (req, res) {
 
-    var sector = req.params.sector;
+    var sector = req.query.sector;
 
     Company.find({'sector': sector}, function (err, results) {
 
@@ -87,9 +80,9 @@ router.get('/getSector/:sector', function (req, res) {
     });
 });
 
-router.get('/getCity/:city', function (req, res) {
+router.get('/city/:city', function (req, res) {
 
-    var city = req.params.city;
+    var city = req.query.city;
 
     Company.find({'city': city}, function (err, results) {
 

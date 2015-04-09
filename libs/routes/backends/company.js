@@ -1,6 +1,3 @@
-/**
- * Created by gokhan on 4/1/15.
- */
 var express = require('express');
 var router = express.Router();
 var Company = require('../../model/company');
@@ -9,7 +6,7 @@ var User = require('../../model/users');
 
 var log = require(libs + 'log')(module);
 
-router.post("/addcompany", function (req, res) {
+router.post("/company", function (req, res) {
     var company = new Company();
 
     company.name = req.body.name;
@@ -24,26 +21,26 @@ router.post("/addcompany", function (req, res) {
     company.save(function (err) {
         if (err) {
             log.error('Error saving company' + err);
-            return res.send(err);
+            return res.json(err);
         }
-        res.json({message: 'Company is added', status_code: res.status_code});
+        return res.json({message: 'Company is successfully created.', status_code: res.status_code});
     });
 });
 
 
-router.delete('/deleteCompany/:id', function (req, res) {
+router.delete('/company/:id', function (req, res) {
 
     Company.remove({_id: req.params.id}, function (err) {
         if (err) {
             log.error('Error deleting company with:' + {id: req.params.id} + err);
             return res.json(err);
         }
-        res.json({message: req.params.id + ':Successfully deleted'});
+        return res.json({message: req.params.id + ':Successfully deleted'});
     });
 });
 
 
-router.put('/changeCompany/:id', function (req, res) {
+router.put('/company/:id', function (req, res) {
 
     Company.findById(req.params.id, function (err, company) {
         if (err) {
@@ -67,7 +64,7 @@ router.put('/changeCompany/:id', function (req, res) {
     })
 });
 
-router.get('/getTotalUser', function (req, res) {
+router.get('/totalUser', function (req, res) {
 
     User.count({}, function (err, count) {
         if (err) {
@@ -80,7 +77,7 @@ router.get('/getTotalUser', function (req, res) {
 });
 
 
-router.get('/getTotalCompany', function (req, res) {
+router.get('/totalCompany', function (req, res) {
     Company.count({}, function (err, companyCount) {
 
         if (err) {

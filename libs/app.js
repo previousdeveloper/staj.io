@@ -8,7 +8,6 @@ var libs = process.cwd() + '/libs/';
 require(libs + 'auth/auth');
 
 
-
 var config = require('./config');
 var log = require('./log')(module);
 var oauth2 = require('./auth/oauth2');
@@ -34,7 +33,8 @@ app.use(roles.middleware());
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    res.header('Content-Type', 'application/json');
     next();
 });
 
@@ -70,5 +70,16 @@ app.use(function (err, req, res) {
     });
     return;
 });
+
+
+app.use(function (req, res) {
+    res.status(401);
+    log.error('%s %d %s', req.method, res.statusCode, err.message);
+    res.json({
+        message: 'Uye girisi yapmalisin !'
+    });
+    return;
+});
+
 
 module.exports = app;

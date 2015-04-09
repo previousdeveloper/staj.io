@@ -3,21 +3,13 @@ var mongoose = require('mongoose'),
 
     Client = new Schema({
         name: {
-            type: String,
-            unique: true,
-            required: true,
-            default: 'client'
+            type: String
         },
         clientId: {
-            type: String,
-            unique: true,
-            required: true,
-            default: 'client'
+            type: String
         },
         clientSecret: {
-            type: String,
-            required: true,
-            default: 'client'
+            type: String
         }
     });
 
