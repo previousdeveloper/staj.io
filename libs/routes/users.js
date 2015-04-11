@@ -29,7 +29,11 @@ router.post('/signUp', function (req, res) {
                 });
             } else {
 
-                if (req.body.username != '' && req.body.password != '' && req.body.password.length > 3) {
+                if (req.body.username === 'undefined'
+                    && req.body.password === 'undefined'
+                    && req.body.password.length > 3
+                    && req.body.name === 'undefined'
+                    && req.body.email === 'undefined') {
                     var newUser = new User();
                     newUser.username = req.body.username;
                     newUser.password = req.body.password;
@@ -92,15 +96,14 @@ router.post('/changePassword', passport.authenticate('bearer', {session: false})
             //    return res.json('wrong password');
             //}
 
-                user.password = req.body.newpassword;
-                user.save(function (err) {
-                    if (err) {
-                        return res.json(err);
-                    } else {
-                        return res.json({message: 'Password changed.'})
-                    }
-                });
-
+            user.password = req.body.newpassword;
+            user.save(function (err) {
+                if (err) {
+                    return res.json(err);
+                } else {
+                    return res.json({message: 'Password changed.'})
+                }
+            });
 
 
         });
@@ -120,7 +123,7 @@ router.post('/favoriteCompany', passport.authenticate('bearer', {session: false}
                     log.error('Finding  company :' + {_id: req.body.companyId} + err);
                     return res.json(err);
                 } else {
-                   // user.followedCompanies.push(company);
+                    // user.followedCompanies.push(company);
                     user.save(function (err) {
                         if (err) {
                             return res.json(err);
