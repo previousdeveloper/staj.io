@@ -29,11 +29,11 @@ router.post('/signUp', function (req, res) {
                 });
             } else {
 
-                if (req.body.username === 'undefined'
-                    && req.body.password === 'undefined'
+                if (req.body.username !== 'undefined'
+                    && req.body.password !== 'undefined'
                     && req.body.password.length > 3
-                    && req.body.name === 'undefined'
-                    && req.body.email === 'undefined') {
+                    && req.body.name !== 'undefined'
+                    && req.body.email !== 'undefined') {
                     var newUser = new User();
                     newUser.username = req.body.username;
                     newUser.password = req.body.password;
