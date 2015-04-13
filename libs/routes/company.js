@@ -52,13 +52,13 @@ router.get('/companies', function (req, res) {
         .find()
         .limit(perPage)
         .skip(perPage * page)
-        .exec(function (err, events) {
+        .exec(function (err, result) {
             Company.count().exec(function (err, count) {
                 if(err){
                     return res.json('Hata Meydana Geldi.');
                 }else{
-                    res.json('events', {
-                        events: events
+                    res.json('company', {
+                        company: result
                         , page: page
                         , pages: count / perPage
                     });
@@ -70,6 +70,17 @@ router.get('/companies', function (req, res) {
 
 
 
+router.get('/cityList', function (req,res) {
+
+    Company.count().find().select('city').exec(function (err,results) {
+
+        if(err){
+            return res.json(er);
+        }
+        return res.json(results);
+    });
+
+});
 
 router.get('/sector/:sector', function (req, res) {
 
