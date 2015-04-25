@@ -1,9 +1,8 @@
 # staj.io
-Türkiyede stajyer alan firmaların bilgileri listeleyen uygulamadır.
+Türkiyede stajyer alan firmaların bilgileri listeleyen bir servistir.
 
-[Türkçe versiyon](https://github.com/previousdeveloper/staj.io/blob/master/README.md)
 
-[English version](https://github.com/previousdeveloper/staj.io/blob/master/README_ENG.md)
+
 
 ### Staj
 [![Build Status](https://magnum-ci.com/status/962be120e085cfec6a6660ce3d5202f7.png)](https://magnum-ci.com/projects/2624)   [![Gittip](http://img.shields.io/gratipay/previousdeveloper.svg)](https://www.gittip.com/previousdeveloper/)
@@ -13,24 +12,68 @@ Türkiyede stajyer alan firmaların bilgileri listeleyen uygulamadır.
 
 To run server execute:
 ```
-node bin/www 
+node bin/www
 ```
 
-### Make Requests
+## The API Endpoints
 
-Creating and refreshing access tokens:
+
+### GET api/v1
+Check api is working if user authenticated
+
+### POST api/v1/signup
+Sign Up
+
+``` js
+username ='sampleUser'
+password ='samplePassword'
+name='name'
+email='email@test.com'
 ```
-http POST http://localhost:1337/api/oauth/token grant_type=password client_id=android client_secret=SomeRandomCharsAndNumbers username=myapi password=abc1234
-http POST http://localhost:1337/api/oauth/token grant_type=refresh_token client_id=android client_secret=SomeRandomCharsAndNumbers refresh_token=[TOKEN]
+
+### GET api/v1/user
+Get user information if user authenticated.
+``` js
+Authorization: Bearer 7yr8KHwufOc0po+0qkwE6z+l
 ```
 
-## Todo
+### POST api/v1/updateInformation
+Change user information if user authenticated.
+``` js
+email='email2@test.com'
+```
 
-1.Android Client for api.
 
-2.Ios Client for api.
+### POST api/v1/oauth/token
+Creating access tokens:
+``` js
+client_id ='client'
+client_secret ='client'
+grant_type='password'
+username='sampleUser'
+password='samplePassword'
+```
 
-3.Web Application.
+### GET api/v1/company
+Getting all company list.
+
+
+### GET api/v1/company?page=1
+Pagining company list
+
+
+### GET api/v1/sector/:sector
+Find sector based company
+
+### GET api/v1/city/:city
+Find city based company
+
+### POST api/v1/search
+``` js
+q='elastichsearchbased'
+```
+
+
 
 ## Contributing
 
