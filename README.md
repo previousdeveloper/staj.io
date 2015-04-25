@@ -8,15 +8,38 @@ Türkiyede stajyer alan firmaların bilgileri listeleyen bir servistir.
 [![Build Status](https://magnum-ci.com/status/962be120e085cfec6a6660ce3d5202f7.png)](https://magnum-ci.com/projects/2624)   [![Gittip](http://img.shields.io/gratipay/previousdeveloper.svg)](https://www.gittip.com/previousdeveloper/)
 
 
-### Run server
+## Run server
+
+### Install Node Module Dependencies
+Install all the Node dependencies listed in package.json run the following command in Terminal
+
+    npm install
+
+
+
+### Start MongoDB
+
+Step 1: if exist Remove lock file.
+sudo rm /var/lib/mongodb/mongod.lock
+
+Step 2: Repair mongodb.
+mongod --repair 
+
+Step 3: start mongodb.
+sudo start mongodb 
+
+### Setup ElastichSearch
+http://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html
+
+### RUN SERVER 
 
 To run server execute:
 ```
 node bin/www
 ```
 
-## The API Endpoints
 
+## The API Endpoints
 
 ### GET api/v1
 Check api is working if user authenticated
