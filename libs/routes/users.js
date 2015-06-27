@@ -4,7 +4,6 @@ var libs = process.cwd() + '/libs/';
 var User = require(libs + 'model/users');
 
 var log = require(libs + 'log')(module);
-var db = require(libs + 'db/mongoose');
 var config = require(libs + 'config');
 var passport = require('passport');
 var Company = require('../model/company');
@@ -53,8 +52,8 @@ router.post('/signUp', function (req, res) {
                     client.save(function (err, client) {
 
                         if (!err) {
-                            res.json({
-                                type: false,
+                            return res.json({
+                                type: true,
                                 data: 'kullanıcı başarıyla oluşturuldu'
                             });
                             log.info("New client - %s:%s", client.clientId, client.clientSecret);
@@ -64,10 +63,12 @@ router.post('/signUp', function (req, res) {
 
                     });
                 } else {
-                    res.json('Kullanıcı adı veya şifre boş olamaz')
+                    return res.json({
+                        type: false,
+                        data: 'Kullanıcı adı veya şifre boş olamaz'
+
+                    })
                 }
-
-
             }
         }
     });
@@ -111,8 +112,7 @@ router.post('/changePassword', passport.authenticate('bearer', {session: false})
 });
 
 
-//Todo:It is not working. CHANGE !
-router.post('/favoriteCompany', passport.authenticate('bearer', {session: false}), function (req, res) {
+router.post('/addCompany', passport.authenticate('bearer', {session: false}), function (req, res) {
 
 
     if (req.user) {
@@ -124,18 +124,13 @@ router.post('/favoriteCompany', passport.authenticate('bearer', {session: false}
                     return res.json(err);
                 } else {
                     // user.followedCompanies.push(company);
-                    user.save(function (err) {
-                        if (err) {
-                            return res.json(err);
-                        } else {
-                            return res.json({message: 'okey'})
-                        }
-                    });
-
+                    user.company.push(company._doc);
+                    user.save();
                 }
             });
         });
     }
+    return res.json("Basariyla eklendi.");
 });
 
 
@@ -153,6 +148,30 @@ router.post('/updateInformation', passport.authenticate('bearer', {session: fals
             });
         });
     }
+});
+
+router.get('/favored', passport.authenticate('bearer', {session: false}), function (req, res) {
+
+
+    if (req.user) {
+        User.findOne({_id: req.user.id}, function (err, user) {
+
+            var companyList = user._doc.company;
+
+            Company.find({
+                '_id': {$in: companyList}
+            }, function (err, result) {
+
+                if (result.length == 0) {
+                    return res.json('Herhangi bir favori sirketin yok:(');
+                } else {
+                    return res.json(result);
+                }
+
+            });
+        });
+    }
+
 });
 
 module.exports = router;

@@ -33,7 +33,7 @@ Company.createMapping(function (err, mapping) {
 
 router.post('/search', function (req, res) {
     Company.search({query_string: {query: req.body.q}}, {hydrate:true}, function (err, results) {
-        res.json(results.hits.hits);
+       return res.json(results.hits.hits);
     });
 });
 

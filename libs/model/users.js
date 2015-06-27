@@ -7,44 +7,45 @@ var company = require('./company');
 var mongoose = require('mongoose'),
     crypto = require('crypto'),
 
+
     Schema = mongoose.Schema,
+    ObjectId = Schema.Types.ObjectId;
+var User = new Schema({
 
-    User = new Schema({
+    username: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    hashedPassword: {
+        type: String,
+        required: true
+    },
+    salt: {
+        type: String,
+        required: true
+    },
+    created: {
+        type: Date,
+        default: Date.now
+    },
+    role: {
+        type: String,
+        default: 'User'
+    },
+    email: {
+        type: String,
+        required: true,
+        min: 5
+    },
+    name: {
+        type: String,
+        required: true,
+        min: 5
+    },
+    company: [{type: ObjectId, ref: 'Company'}]
 
-        username: {
-            type: String,
-            unique: true,
-            required: true
-        },
-        hashedPassword: {
-            type: String,
-            required: true
-        },
-        salt: {
-            type: String,
-            required: true
-        },
-        created: {
-            type: Date,
-            default: Date.now
-        },
-        role: {
-            type: String,
-            default: 'User'
-        },
-        email: {
-            type: String,
-            required: true,
-            min: 5
-        },
-        name: {
-            type: String,
-            required: true,
-            min: 5
-        },
-        followedCompanies: [company]
-
-    });
+});
 
 
 User.methods.encryptPassword = function (password) {

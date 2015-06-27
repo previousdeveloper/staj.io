@@ -3,6 +3,7 @@ var router = express.Router();
 var Company = require('../model/company');
 var NodeCache = require("node-cache");
 var libs = process.cwd() + '/libs/';
+var db = require(libs + 'db/mongoose');
 
 var log = require(libs + 'log')(module);
 
