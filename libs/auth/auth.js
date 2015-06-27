@@ -1,3 +1,5 @@
+'use strict';
+
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
 var ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy;

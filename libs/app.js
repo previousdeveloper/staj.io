@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -16,7 +18,7 @@ var company = require('./routes/company');
 var api = require('./routes/api');
 var users = require('./routes/users');
 var backendCompany = require('./routes/backends/company');
-var backendUser =require('./routes/backends/users');
+var backendUser = require('./routes/backends/users');
 var elasticsearch = require('./routes/elasticsearch');
 var app = express();
 var roles = new ConnectRoles();
@@ -31,7 +33,7 @@ app.use(roles.middleware());
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     res.header('Content-Type', 'application/json');
     next();
@@ -80,7 +82,6 @@ app.use(function (req, res) {
     });
     return;
 });
-
 
 
 module.exports = app;

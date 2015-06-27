@@ -1,6 +1,3 @@
-/**
- * Created by gokhan on 4/1/15.
- */
 'use strict';
 
 var company = require('./company');
@@ -10,6 +7,12 @@ var mongoose = require('mongoose'),
 
     Schema = mongoose.Schema,
     ObjectId = Schema.Types.ObjectId;
+
+var validateEmail = function (email) {
+    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email)
+};
+
 var User = new Schema({
 
     username: {
@@ -35,8 +38,11 @@ var User = new Schema({
     },
     email: {
         type: String,
-        required: true,
-        min: 5
+        trim: true,
+        unique: true,
+        required: 'Email address is required',
+        validate: [validateEmail, 'Please fill a valid email address'],
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
     name: {
         type: String,
@@ -61,10 +67,14 @@ User.virtual('userId')
 
 User.virtual('password')
     .set(function (password) {
-        this._plainPassword = password;
-        this.salt = crypto.randomBytes(32).toString('base64');
-        //more secure - this.salt = crypto.randomBytes(128).toString('base64');
-        this.hashedPassword = this.encryptPassword(password);
+
+        if (password !== undefined) {
+            this._plainPassword = password;
+            this.salt = crypto.randomBytes(32).toString('base64');
+            //more secure - this.salt = crypto.randomBytes(128).toString('base64');
+            this.hashedPassword = this.encryptPassword(password);
+        }
+
     })
     .get(function () {
         return this._plainPassword;
@@ -72,7 +82,10 @@ User.virtual('password')
 
 
 User.methods.checkPassword = function (password) {
-    return this.encryptPassword(password) === this.hashedPassword;
+    if (password !== undefined) {
+        return this.encryptPassword(password) === this.hashedPassword;
+
+    }
 };
 
 

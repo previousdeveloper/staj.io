@@ -1,3 +1,6 @@
+'use strict';
+
+
 var mongoose = require('mongoose');
 
 var libs = process.cwd() + '/libs/';

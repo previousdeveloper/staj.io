@@ -1,6 +1,5 @@
-/**
- * Created by gokhan on 4/3/15.
- */
+'use strict';
+
 var express = require('express');
 var router = express.Router();
 var Company = require('../model/company');

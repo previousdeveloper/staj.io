@@ -1,3 +1,5 @@
+'use strict';
+
 var oauth2orize = require('oauth2orize');
 var passport = require('passport');
 var crypto = require('crypto');

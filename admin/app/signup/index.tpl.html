@@ -1,0 +1,14 @@
+<form class="form-login" role="form">
+    <h2 class="form-login-heading">Sign up</h2>
+    <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.signUpData.username" required
+           autofocus>
+    <input type="password" class="form-control" placeholder="Password" data-ng-model="vm.signUpData.password" required>
+    <input type="text" class="form-control" placeholder="name" data-ng-model="vm.signUpData.name" required>
+    <input type="email" class="form-control" placeholder="name" data-ng-model="vm.signUpData.email" required>
+    <button class="btn btn-lg btn-info btn-success" type="submit" data-ng-click="vm.signUp()">Submit</button>
+
+
+    <div class="modal-body" ng-show="vm.signUpResult!==null">
+        {{vm.signUpResult.data}}
+    </div>
+</form>

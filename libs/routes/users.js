@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var router = express.Router();
 var libs = process.cwd() + '/libs/';
@@ -28,46 +30,57 @@ router.post('/signUp', function (req, res) {
                 });
             } else {
 
-                if (req.body.username !== 'undefined'
-                    && req.body.password !== 'undefined'
-                    && req.body.password.length > 3
-                    && req.body.name !== 'undefined'
-                    && req.body.email !== 'undefined') {
-                    var newUser = new User();
-                    newUser.username = req.body.username;
-                    newUser.password = req.body.password;
-
-                    //Todo:Refactor check email and name empty
-                    newUser.email = req.body.email;
-                    newUser.name = req.body.name;
-                    newUser.save(function (err) {
-                        if (err) {
-                            return res.json(err);
-                        }
-                    });
-                    var client = new Client();
-                    client.clientId = 'client';
-                    client.clientSecret = 'client';
-                    client.name = 'client';
-                    client.save(function (err, client) {
-
-                        if (!err) {
-                            return res.json({
-                                type: true,
-                                data: 'kullanıcı başarıyla oluşturuldu'
-                            });
-                            log.info("New client - %s:%s", client.clientId, client.clientSecret);
-                        } else {
-                            return log.error(err);
-                        }
-
-                    });
-                } else {
+                if (
+                    req.body.password == 'undefined' ||
+                    req.body.password == '' ||
+                    req.body.username == 'undefined' ||
+                    req.body.username == '' ||
+                    req.body.email == 'undefined' ||
+                    req.body.email == '' ||
+                    req.body.name == 'undefined' ||
+                    req.body.name == ''
+                ) {
                     return res.json({
                         type: false,
                         data: 'Kullanıcı adı veya şifre boş olamaz'
 
-                    })
+                    });
+
+                }
+                else {
+
+                    var newUser = new User();
+                    newUser.username = req.body.username;
+                    newUser.password = req.body.password;
+
+
+                    newUser.email = req.body.email;
+                    newUser.name = req.body.name;
+
+                    newUser.save(function (err) {
+                        if (err) {
+                            return res.json({
+                                type: false,
+                                data: err
+                            });
+                        } else {
+                            var client = new Client();
+                            client.clientId = 'client';
+                            client.clientSecret = 'client';
+                            client.name = 'client';
+                            client.save(function (err, client) {
+                                if (!err) {
+                                    return res.json({
+                                        type: true,
+                                        data: 'kullanıcı başarıyla oluşturuldu'
+                                    });
+                                } else {
+                                    return log.error(err);
+                                }
+
+                            });
+                        }
+                    });
                 }
             }
         }
