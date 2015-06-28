@@ -6,7 +6,7 @@ var router = express.Router();
 
 router.get('/', passport.authenticate('bearer', {session: false}), function (req, res) {
     res.json({
-        msg: 'API is running'
+        message: 'API is running'
     });
 });
 

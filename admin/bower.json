@@ -9,5 +9,6 @@
     "angular-ui-router": "~0.2"
   },
   "dependencies": {
+    "angular-local-storage": "~0.2.2"
   }
 }

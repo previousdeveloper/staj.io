@@ -18,11 +18,11 @@ function signUpService($http, $q) {
 
         var deferred = $q.defer();
 
-        $http.post('http://localhost:3000/api/v1/signup', data)
+        $http.post('https://staj-io-goldenilkay92-1.c9.io/api/v1/signup', data)
             .success(function (data) {
                 deferred.resolve(data);
             }).error(function () {
-                deferred.reject("Failed to get albums");
+                deferred.reject("Failed to sign Up");
             });
 
         return deferred.promise;

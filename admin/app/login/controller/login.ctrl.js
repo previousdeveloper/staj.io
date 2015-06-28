@@ -15,15 +15,15 @@ function LoginCtrl($scope, loginService, $location) {
         'client_id': 'client',
         'client_secret': 'client',
         'grant_type': 'password',
-        'username': 'deneme2',
-        'password': 'deneme2'
+        'username': '',
+        'password': ''
     };
 
 
     vm.login = function login() {
 
         loginService.signIn(vm.loginData).then(function (result) {
-                vm.signUpResult = result;
+                vm.signInResult = result;
 
             },
             function (data) {

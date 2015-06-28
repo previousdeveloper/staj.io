@@ -20,13 +20,13 @@ router.post('/signUp', function (req, res) {
         if (err) {
             return res.json({
                 type: false,
-                data: "Hata meydana geldi" + err
+                message: "Hata meydana geldi" + err
             });
         } else {
             if (currentUser) {
                 return res.json({
                     type: false,
-                    data: "Kullanıcı mevcut"
+                    message: "Kullanıcı mevcut"
                 });
             } else {
 
@@ -42,7 +42,7 @@ router.post('/signUp', function (req, res) {
                 ) {
                     return res.json({
                         type: false,
-                        data: 'Kullanıcı adı veya şifre boş olamaz'
+                        message: 'Kullanıcı adı veya şifre boş olamaz'
 
                     });
 
@@ -61,7 +61,7 @@ router.post('/signUp', function (req, res) {
                         if (err) {
                             return res.json({
                                 type: false,
-                                data: err
+                                message: err
                             });
                         } else {
                             var client = new Client();
@@ -72,7 +72,7 @@ router.post('/signUp', function (req, res) {
                                 if (!err) {
                                     return res.json({
                                         type: true,
-                                        data: 'kullanıcı başarıyla oluşturuldu'
+                                        message: 'kullanıcı başarıyla oluşturuldu'
                                     });
                                 } else {
                                     return log.error(err);
@@ -92,13 +92,22 @@ router.post('/signUp', function (req, res) {
 
 router.get('/user', passport.authenticate('bearer', {session: false}), function (req, res) {
 
-    res.json({
+    if (res !== undefined) {
 
-        userId: req.user._id,
-        username: req.user.username,
-        name: req.user.name,
-        email: req.user.email
-    });
+       return res.json({
+
+            userId: req.user._id,
+            username: req.user.username,
+            name: req.user.name,
+            email: req.user.email
+        });
+    }else{
+        return res.json({
+            type:false,
+            message:'Kullanici bilgisi hatasi'
+        })
+    }
+
 });
 
 router.post('/changePassword', passport.authenticate('bearer', {session: false}), function (req, res) {
@@ -113,7 +122,9 @@ router.post('/changePassword', passport.authenticate('bearer', {session: false})
             user.password = req.body.newpassword;
             user.save(function (err) {
                 if (err) {
-                    return res.json(err);
+                    return res.json({
+                        message:err
+                    });
                 } else {
                     return res.json({message: 'Password changed.'})
                 }
@@ -143,7 +154,10 @@ router.post('/addCompany', passport.authenticate('bearer', {session: false}), fu
             });
         });
     }
-    return res.json("Basariyla eklendi.");
+    return res.json({
+        type:true,
+        message:'Sirket takip listesine eklendi'
+    });
 });
 
 
@@ -154,9 +168,11 @@ router.post('/updateInformation', passport.authenticate('bearer', {session: fals
             user.email = req.body.email;
             user.save(function (err) {
                 if (err) {
-                    return res.json(err);
+                    return res.json({
+                        message:err
+                    });
                 } else {
-                    return res.json({message: 'Email added.'})
+                    return res.json({message: 'Email adresi guncellendi.'})
                 }
             });
         });
@@ -176,7 +192,9 @@ router.get('/favored', passport.authenticate('bearer', {session: false}), functi
             }, function (err, result) {
 
                 if (result.length == 0) {
-                    return res.json('Herhangi bir favori sirketin yok:(');
+                    return res.json({
+                        message:'Herhangi bir favori sirketin yok:('
+                    });
                 } else {
                     return res.json(result);
                 }

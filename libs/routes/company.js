@@ -14,7 +14,9 @@ Company.find(function (err, results) {
 
     if (err) {
         log.error('Error  getting all company list' + err);
-        return res.json(err);
+        return res.json({
+            message: err
+        });
     }
     myCache.set('companyList', results, function (err, success) {
         if (!err && success) {
@@ -41,8 +43,10 @@ router.get('/sectorAndCity/:sector/:city', function (req, res) {
     Company.find({'sector': sector, 'city': city}, function (err, results) {
         if (err) {
             return res.json(err);
+        } else {
+            return res.json(results);
         }
-        res.json(results);
+
     });
 });
 
@@ -56,9 +60,9 @@ router.get('/companies', function (req, res) {
         .skip(perPage * page)
         .exec(function (err, result) {
             Company.count().exec(function (err, count) {
-                if(err){
-                    return res.json('Hata Meydana Geldi.');
-                }else{
+                if (err) {
+                    return res.json({message: 'Hata Meydana Geldi.'});
+                } else {
                     res.json('company', {
                         company: result
                         , page: page
@@ -71,15 +75,17 @@ router.get('/companies', function (req, res) {
 });
 
 
+router.get('/cityList', function (req, res) {
 
-router.get('/cityList', function (req,res) {
+    Company.count().find().select('city').exec(function (err, results) {
 
-    Company.count().find().select('city').exec(function (err,results) {
-
-        if(err){
+        if (err) {
             return res.json(er);
         }
-        return res.json(results);
+        else {
+            return res.json(results);
+        }
+
     });
 
 });
