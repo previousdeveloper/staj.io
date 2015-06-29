@@ -4,9 +4,9 @@ angular
     .module('login.module')
     .controller('LoginCtrl', LoginCtrl);
 
-LoginCtrl.$inject = ['$scope', 'loginService', '$location'];
+LoginCtrl.$inject = ['$scope', 'loginService', '$location','localStorageService'];
 
-function LoginCtrl($scope, loginService, $location) {
+function LoginCtrl($scope, loginService, $location,localStorageService) {
 
     var vm = this;
 
@@ -24,12 +24,19 @@ function LoginCtrl($scope, loginService, $location) {
 
         loginService.signIn(vm.loginData).then(function (result) {
                 vm.signInResult = result;
+                localStorageService.set('accessToken',result.access_token);
 
             },
-            function (data) {
-
+            function (err) {
+                vm.signInResult = err;
             });
 
 
+    };
+
+    vm.getToken = function getToken(){
+
+        vm.token =localStorageService.get('accessToken');
+        return  vm.token;
     }
 }

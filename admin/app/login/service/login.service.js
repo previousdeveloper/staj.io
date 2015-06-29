@@ -20,13 +20,11 @@ function login($http, $q) {
         var deferred = $q.defer();
 
 
-        $http.post('https://staj-io-goldenilkay92-1.c9.io/api/v1/oauth/token', data,
-            {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-        )
+        $http.post('http://localhost:3000/api/v1/oauth/token',data)
             .success(function (response, status, headers, config) {
                 deferred.resolve(response);
-            }).error(function () {
-                deferred.reject("Failed to login");
+            }).error(function (err,status,headers,config) {
+                deferred.reject(err);
             });
 
         return deferred.promise;

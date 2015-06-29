@@ -12,7 +12,9 @@
     "type": "git",
     "url": "git@github.com:ngbp/ngbp.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "cors": "^2.7.1"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-bump": "0.0.6",

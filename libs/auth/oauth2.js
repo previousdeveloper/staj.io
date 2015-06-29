@@ -115,7 +115,7 @@ aserver.exchange(oauth2orize.exchange.refreshToken(function(client, refreshToken
 // authenticate when making requests to this endpoint.
 
 exports.token = [
-	passport.authenticate(['basic', 'oauth2-client-password'], { session: false }),
+	passport.authenticate([ 'oauth2-client-password'], { session: false }),
 	aserver.token(),
 	aserver.errorHandler()
 ];

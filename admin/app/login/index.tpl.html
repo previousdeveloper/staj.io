@@ -1,13 +1,16 @@
 <form class="form-login" role="form">
-    <h2 class="form-login-heading">Sign up</h2>
+    <h2 class="form-login-heading">Sign In</h2>
     <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.loginData.username" required
            autofocus>
     <input type="password" class="form-control" placeholder="Password" data-ng-model="vm.loginData.password" required>
 
     <button class="btn btn-lg btn-info btn-success" type="submit" data-ng-click="vm.login()">Submit</button>
+    <button class="btn btn-lg btn-info btn-primary" type="submit" data-ng-click="vm.getToken()">GetToken</button>
 
-
+    <div class="modal-body" ng-show="vm.token!==null">
+        {{vm.token}}
+    </div>
     <div class="modal-body" ng-show="vm.signUpResult!==null">
-        {{vm.signUpResult}}
+        {{vm.signInResult}}
     </div>
 </form>
