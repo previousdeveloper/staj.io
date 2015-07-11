@@ -19,16 +19,19 @@ function SignUpCtrl($scope, signUpService, $location) {
     };
 
 
-    vm.signUp = function signUp() {
+    vm.signUp = function() {
 
         signUpService.signUp(vm.signUpData).then(function (result) {
                 vm.signUpResult = result;
 
+                if (result !== null & result !== undefined) {
+                    $location.path('/login');
+                }
+
             },
-            function (data) {
+            function (err) {
 
             });
-
 
     }
 }

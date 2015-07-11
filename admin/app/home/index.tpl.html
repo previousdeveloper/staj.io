@@ -1,15 +1,344 @@
-<div class="jumbotron">
-  <h1>Staj.io Admin</h1>
+<script type="text/javascript">
+    $(document).ready(function () {
+                $(".tablesorter").tablesorter();
+            }
+    );
+    $(document).ready(function () {
 
-  <!--<p class="lead">-->
-    <!--Everything you need to kickstart AngularJS projects: a best-practice directory structure, an intelligent build system, and the best web design libraries around.-->
-  <!--</p>-->
+        //When page loads...
+        $(".tab_content").hide(); //Hide all content
+        $("ul.tabs li:first").addClass("active").show(); //Activate first tab
+        $(".tab_content:first").show(); //Show first tab content
 
-</div>
+        //On Click Event
+        $("ul.tabs li").click(function () {
 
-<br/>
-<ul>
-  <li ng-repeat="item in vm.dummyList">
-    {{item}}
-  </li>
-</ul>
+            $("ul.tabs li").removeClass("active"); //Remove any "active" class
+            $(this).addClass("active"); //Add "active" class to selected tab
+            $(".tab_content").hide(); //Hide all tab content
+
+            var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+            $(activeTab).fadeIn(); //Fade in the active ID content
+            return false;
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('.column').equalHeight();
+    });
+</script>
+
+
+<header id="header">
+    <hgroup>
+        <h1 class="site_title"><a href="#/home">Stajbul.io Admin Panel</a></h1>
+
+        <h2 class="section_title">Admin Panel</h2>
+
+        <div class="btn_view_site"><a href="#/home">Siteye Git</a></div>
+    </hgroup>
+</header> <!-- end of header bar -->
+
+<section id="secondary_bar">
+    <div class="user">
+        <p>{{vm.currentUser.name}} (<a href="#/home">{{vm.currentUser.email}}</a>)</p>
+        <!-- <a class="logout_user" href="#" title="Logout">Logout</a> -->
+    </div>
+    <div class="breadcrumbs_container">
+        <article class="breadcrumbs"><a href="#/home">Stajbul.io Website</a>
+
+            <div class="breadcrumb_divider"></div>
+            <a class="current">Panel</a></article>
+    </div>
+</section><!-- end of secondary bar -->
+
+<aside id="sidebar" class="column">
+    <form class="quick_search">
+        <input type="text" data-ng-model="vm.logEventSearch" placeholder="Log Arama" value="Log Arama">
+    </form>
+    <hr/>
+    <h3>Icerik</h3>
+    <ul class="toggle">
+        <li class="icn_new_article"><a href="#/addcompany">Yeni Sirket Ekle</a></li>
+        <li class="icn_edit_article"><a href="#">Sirket Bilgilerini duzenle</a></li>
+        <!--<li class="icn_categories"><a href="#">Categories</a></li>-->
+        <!--<li class="icn_tags"><a href="#">Tags</a></li>-->
+    </ul>
+    <h3>Kullanicilar</h3>
+    <ul class="toggle">
+        <li class="icn_add_user"><a href="#/about">Yeni Kullanici Ekle</a></li>
+        <li class="icn_view_users"><a href="#">Tum kullanicilari Gor</a></li>
+        <li class="icn_profile"><a href="#">Profil Detayim</a></li>
+    </ul>
+    <h3>Sirket Resimleri</h3>
+    <ul class="toggle">
+        <li class="icn_photo"><a href="#">Resimler</a></li>
+
+    </ul>
+    <h3>Admin</h3>
+    <ul class="toggle">
+        <li class="icn_jump_back" ng-click="vm.logout()"><a>Cikis Yap</a></li>
+    </ul>
+
+    <footer>
+        <hr/>
+        <p><strong>Tum hakki saklidir. &copy; 2015 Stajbul.io Admin Panel</strong></p>
+
+    </footer>
+</aside><!-- end of sidebar -->
+
+<section id="main" class="column">
+
+    <h4 class="alert_info">{{vm.apiStatus.message}}!</h4>
+
+    <article class="module width_full">
+        <header><h3>Durum</h3></header>
+        <div class="module_content">
+
+
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-user fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{vm.totalUserCount}}</div>
+                                    <div>Toplam Kullanici</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#/update">
+                            <div class="panel-footer">
+                                <span class="pull-left">Detaylari Goruntule</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-check-circle fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{vm.totalCompanyCount}}</div>
+                                    <div>Toplam Sirket Sayisi</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#/update">
+                            <div class="panel-footer">
+                                <span class="pull-left">Detaylari Goruntule</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-android fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{vm.normalUserCount.message}}</div>
+                                    <div>Android Kullanan Sayisi</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-thumbs-up fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">2</div>
+                                    <div>En fazla begenilen sirket sayisi!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+    </article>
+    <!-- end of stats article -->
+
+    <article class="module width_3_quarter">
+        <header><h3 class="tabs_involved">Son 10 Kullanici</h3>
+            <ul class="tabs">
+                <!--<li><a href="#tab1">Posts</a></li>-->
+                <!--<li><a href="#tab2">Comments</a></li>-->
+            </ul>
+        </header>
+
+        </div>
+
+        </div>
+        <div class="tab_container">
+            <div id="tab1" class="tab_content">
+                <table class="tablesorter" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Isim</th>
+                        <th>Mail</th>
+                        <th>Username</th>
+                        <th>Created</th>
+                        <th>Islemler</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-repeat="totalUser in vm.totalUser.slice().reverse() | limitTo:10">
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>{{totalUser.name}}</td>
+                        <td>{{totalUser.email}}</td>
+                        <td>{{totalUser.username}}</td>
+                        <td>{{totalUser.created}}</td>
+                        <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image"
+                                                                                              src="images/icn_trash.png"
+                                                                                              title="Trash"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- end of #tab1 -->
+
+            <div id="tab2" class="tab_content">
+                <table class="tablesorter" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Sirket Ismi</th>
+                        <th>Email</th>
+                        <th>Sehir</th>
+                        <th>Sector</th>
+                        <th>Islemler</th>
+                    </tr>
+                    </thead>
+                    <tbody ng-repeat="totalCompany in vm.allCompanyList.slice().reverse() | limitTo:10">
+                    <tr>
+
+                        <td>{{totalCompany.name}}</td>
+                        <td>{{totalCompany.email}}</td>
+                        <td>{{totalCompany.city}}</td>
+                        <td>{{totalCompany.sector}}</td>
+                        <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image"
+                                                                                              src="images/icn_trash.png"
+                                                                                              title="Trash"></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <!-- end of #tab2 -->
+
+        </div>
+        <!-- end of .tab_container -->
+
+    </article>
+    <!-- end of content manager article -->
+
+    <article class="module width_quarter">
+        <header><h3>Log Kayitlari</h3></header>
+        <div class="message_list">
+            <div class="module_content" ng-repeat="log in vm.logEvent.slice().reverse() | filter:vm.logEventSearch">
+                <div class="message"><p><strong>{{log}}</strong></p>
+
+
+                </div>
+            </div>
+        </div>
+        <footer>
+
+        </footer>
+    </article>
+    <!-- end of company article -->
+
+    <div class="clear"></div>
+
+    <article class="module width_full">
+        <header><h3>Post New Article</h3></header>
+        <div class="module_content">
+            <fieldset>
+                <label>Post Title</label>
+                <input type="text">
+            </fieldset>
+            <fieldset>
+                <label>Content</label>
+                <textarea rows="12"></textarea>
+            </fieldset>
+            <fieldset style="width:48%; float:left; margin-right: 3%;">
+                <!-- to make two field float next to one another, adjust values accordingly -->
+                <label>Category</label>
+                <select style="width:92%;">
+                    <option>Articles</option>
+                    <option>Tutorials</option>
+                    <option>Freebies</option>
+                </select>
+            </fieldset>
+            <fieldset style="width:48%; float:left;">
+                <!-- to make two field float next to one another, adjust values accordingly -->
+                <label>Tags</label>
+                <input type="text" style="width:92%;">
+            </fieldset>
+            <div class="clear"></div>
+        </div>
+        <footer>
+            <div class="submit_link">
+                <select>
+                    <option>Draft</option>
+                    <option>Published</option>
+                </select>
+                <input type="submit" value="Publish" class="alt_btn">
+                <input type="submit" value="Reset">
+            </div>
+        </footer>
+    </article>
+
+    <!--<h4 class="alert_warning">A Warning Alert</h4>-->
+
+    <!--<h4 class="alert_error">An Error Message</h4>-->
+
+    <!--<h4 class="alert_success">A Success Message</h4>-->
+
+
+
+    <div class="spacer"></div>
+</section>

@@ -24,19 +24,17 @@ function LoginCtrl($scope, loginService, $location,localStorageService) {
 
         loginService.signIn(vm.loginData).then(function (result) {
                 vm.signInResult = result;
-                localStorageService.set('accessToken',result.access_token);
+
+                if(result.access_token!==null & result.access_token!==undefined){
+                    localStorageService.set('accessToken',result.access_token);
+                    $location.path('/home');
+                }
 
             },
             function (err) {
                 vm.signInResult = err;
             });
 
-
     };
 
-    vm.getToken = function getToken(){
-
-        vm.token =localStorageService.get('accessToken');
-        return  vm.token;
-    }
 }

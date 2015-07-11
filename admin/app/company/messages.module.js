@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('demoApp.about', [
+angular.module('company.module', [
   'ui.router',
   'placeholders',
   'ui.bootstrap'

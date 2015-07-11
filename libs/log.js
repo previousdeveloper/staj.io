@@ -10,7 +10,7 @@ function logger(module) {
         transports : [
             new winston.transports.File({
                 level: 'info',
-                filename: process.cwd() + '/logs/all.log',
+                filename: process.cwd() + '/logs/all.log.txt',
                 handleException: true,
                 json: true,
                 maxSize: 5242880, //5mb 
@@ -21,7 +21,7 @@ function logger(module) {
                 level: 'debug',
                 label: getFilePath(module),
                 handleException: true,
-                json: false,
+                json: true,
                 colorize: true
             })
         ],

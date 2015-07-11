@@ -42,20 +42,37 @@ router.post('/userRole/:id', function (req, res) {
     });
 });
 
+
 router.get('/user', function (req, res) {
 
-    User.find(function (err, user) {
+        User.find(function (err, user) {
+            if (err) {
+                log.error('Error getting user' + err);
+                return res.json(err);
+            } else {
+
+                return res.json(user);
+            }
+        });
+});
+
+
+router.get('/normalusercount', function (req, res) {
+
+    User.count({ 'role': 'User' },function (err, count) {
+        var count = 0;
         if (err) {
             log.error('Error getting user' + err);
             return res.json(err);
         } else {
 
-            return res.json(user);
+            return res.json({
+                    message: count
+                }
+            )
         }
     });
-
-
-});
-
+})
+;
 
 module.exports = router;

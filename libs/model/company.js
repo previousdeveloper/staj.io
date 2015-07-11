@@ -6,9 +6,9 @@ var mongoosastic = require('mongoosastic');
 var elasticsearch = require('elasticsearch');
 
 var companySchema = new Schema({
-    name: {type: String, es_boost: 2.0},
+    name: {type: String, es_boost: 2.0, required: true},
     information: {type: String, es_boost: 2.0},
-    city: {type: String, es_boost: 2.0},
+    city: {type: String, es_boost: 2.0,required: true},
     sector: {type: String, es_boost: 2.0},
     email: {type: String, es_boost: 2.0},
     address: {type: String, es_boost: 2.0},

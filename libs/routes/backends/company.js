@@ -7,6 +7,7 @@ var libs = process.cwd() + '/libs/';
 var User = require('../../model/users');
 
 var log = require(libs + 'log')(module);
+var fs = require('fs');
 
 router.post("/company", function (req, res) {
     var company = new Company();
@@ -26,6 +27,18 @@ router.post("/company", function (req, res) {
             return res.json(err);
         }
         return res.json({message: 'Company is successfully created.', status_code: res.status_code});
+    });
+});
+
+router.get('/company',function(req,res){
+
+    Company.find(function(err,company){
+
+        if(err){
+            return res.json(err);
+        }else{
+            res.json(company)
+        }
     });
 });
 
@@ -88,6 +101,18 @@ router.get('/totalCompany', function (req, res) {
         }
         return res.json(companyCount);
     })
+});
+
+router.get('/log', function (req,res) {
+
+
+    fs.readFile(process.cwd() + '/logs/all.log.txt', function(err, data) {
+        if(err) throw err;
+        var array = data.toString().split("\n");
+
+        res.json(array);
+
+    });
 });
 
 

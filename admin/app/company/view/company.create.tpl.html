@@ -1,0 +1,94 @@
+<div class="content-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-head-line"></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Sirket Ekleme Formu
+                    </div>
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="InputCompanyName">Sirket Adi</label>
+                                <input type="text"  name="" class="form-control"
+                                       data-ng-model="vm.companyDataModel.name"
+                                       id="InputCompanyName"
+                                       placeholder="Sirket Ismi"/>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="InputCompanyAdres">Sirket Adresi</label>
+                                <textarea class="form-control" rows="3"
+                                          data-ng-model="vm.companyDataModel.address"
+                                          id="InputCompanyAdres"
+                                          placeholder="Sirket Adresi"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="InputCompanyEmail">Sirket Maili</label>
+                                <input type="text" class="form-control"
+                                       data-ng-model="vm.companyDataModel.email"
+                                       id="InputCompanyEmail"
+                                       placeholder="Sirket Maili"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="InputCompanyWebsite">Sirket Websitesi</label>
+                                <input type="text" class="form-control"
+                                       data-ng-model="vm.companyDataModel.websiteUrl"
+                                       id="InputCompanyWebsite"
+                                       placeholder="Sirket Websitesi"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="InputCompanyCity">Sirket Sehri</label>
+                                <input type="text" class="form-control"
+                                       data-ng-model="vm.companyDataModel.city"
+                                       id="InputCompanyCity"
+                                       placeholder="Sirket Sehri"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="InputCompanySector">Sirket Sektoru</label>
+
+                                <input type="text" data-ng-model="vm.companyDataModel.sector"
+                                       class="form-control"
+                                       id="InputCompanySector"
+                                       placeholder="Sirket Sektoru"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="InputCompanyInformation">Sirket Hakkindaki Bilgiler</label>
+                                <textarea class="form-control"
+                                          data-ng-model="vm.companyDataModel.information"
+
+                                          rows="3" id="InputCompanyInformation"
+                                          placeholder="Sirket Adresi"></textarea>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="InputCompanyLogo">Sirket Logosu</label>
+                                <input type="text" class="form-control"
+                                       data-ng-model="vm.companyDataModel.imgurl"
+                                       id="InputCompanyLogo"
+                                       placeholder="Sirket Logosu"/>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="button" value="Secimi Gonder" ng-click="vm.createCompany()"
+                                       class="btn btn-success">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
