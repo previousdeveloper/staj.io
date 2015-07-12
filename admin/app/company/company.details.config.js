@@ -9,7 +9,8 @@ angular
                 "main": {
                     controller: 'CompanyDetails',
                     templateUrl: 'app/company/view/company.operation.tpl.html',
-                    controllerAs: 'vm'
+                    controllerAs: 'vm',
+                    authenticate: true
                 }
             },
             data: {

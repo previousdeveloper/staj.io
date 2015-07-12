@@ -3,13 +3,15 @@
 angular.module('login.module')
     .service('loginService', login);
 
-login.$inject = ['$http', '$q'];
+login.$inject = ['$http', '$q', 'localStorageService'];
 
-function login($http, $q) {
+function login($http, $q, localStorageService) {
 
     var loginService = {
 
-        signIn: signIn
+        signIn: signIn,
+        getAccessToken: getAccessToken,
+        getRefreshToken: getRefreshToken
     };
 
     return loginService;
@@ -20,14 +22,26 @@ function login($http, $q) {
         var deferred = $q.defer();
 
 
-        $http.post('http://localhost:3000/api/v1/oauth/token',data)
+        $http.post('http://localhost:3000/api/v1/oauth/token', data)
             .success(function (response, status, headers, config) {
                 deferred.resolve(response);
-            }).error(function (err,status,headers,config) {
+            }).error(function (err, status, headers, config) {
                 deferred.reject(err);
             });
 
         return deferred.promise;
 
     }
+
+
+    function getAccessToken() {
+        localStorageService.get('accessToken');
+    }
+
+    function getRefreshToken() {
+
+        localStorageService.get('refreshToken');
+    }
+
+
 }

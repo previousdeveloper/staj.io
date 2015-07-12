@@ -9,7 +9,8 @@ angular
                 "main": {
                     controller: 'LoginCtrl',
                     templateUrl: 'app/login/index.tpl.html',
-                    controllerAs: "vm"
+                    controllerAs: "vm",
+                    authenticate:false
                 }
             },
             data: {

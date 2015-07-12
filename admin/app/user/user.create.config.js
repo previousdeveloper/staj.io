@@ -9,7 +9,8 @@ angular
                 "main": {
                     controller: 'UserCreateCtrl',
                     templateUrl: 'app/user/views/user.create.tpl.html',
-                    controllerAs: "vm"
+                    controllerAs: "vm",
+                    authenticate: true
                 }
             },
             data: {

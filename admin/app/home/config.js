@@ -12,6 +12,7 @@ function config($stateProvider) {
         controller: 'HomeCtrl',
         templateUrl: 'app/home/index.tpl.html',
         controllerAs: 'vm',
+          authenticate: true,
         resolve: {
           dummyListService: dummyListService
         }
