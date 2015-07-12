@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "angular-local-storage": "~0.2.2",
-    "angularjs-toaster": "~0.4.15"
+    "angularjs-toaster": "~0.4.15",
+    "angular-datatables":"latest"
   }
 }

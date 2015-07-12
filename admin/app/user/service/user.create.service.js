@@ -1,17 +1,18 @@
 'use strict';
 
-angular.module('signUp.module')
-    .factory('signUpService', signUpService);
+angular.module('user.module')
+    .factory('userCreateService', userCreateService);
 
-signUpService.$inject = ['$http', '$q'];
+userCreateService.$inject = ['$http', '$q'];
 
-function signUpService($http, $q) {
+function userCreateService($http, $q) {
 
     var signUpService = {
         signUp: signUp
     };
 
     return signUpService;
+
     ///////////////
 
     function signUp(data) {

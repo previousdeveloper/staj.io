@@ -1,4 +1,4 @@
-angular.module('signUp.module', [
+angular.module('user.module', [
     'ui.router',
     'placeholders',
     'ui.bootstrap'

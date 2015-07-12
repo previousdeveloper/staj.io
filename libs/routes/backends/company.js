@@ -10,33 +10,46 @@ var log = require(libs + 'log')(module);
 var fs = require('fs');
 
 router.post("/company", function (req, res) {
-    var company = new Company();
 
-    company.name = req.body.name;
-    company.address = req.body.address;
-    company.email = req.body.email;
-    company.websiteUrl = req.body.websiteUrl;
-    company.city = req.body.city;
-    company.sector = req.body.sector;
-    company.information = req.body.information;
-    company.imgurl = req.body.imgurl;
+    Company.findOne({name: req.body.name}, function (err, result) {
 
-    company.save(function (err) {
-        if (err) {
-            log.error('Error saving company' + err);
-            return res.json(err);
+        if (result === null || result === undefined) {
+            var company = new Company();
+
+            company.name = req.body.name;
+            company.address = req.body.address;
+            company.email = req.body.email;
+            company.websiteUrl = req.body.websiteUrl;
+            company.city = req.body.city;
+            company.sector = req.body.sector;
+            company.information = req.body.information;
+            company.imgurl = req.body.imgurl;
+
+            company.save(function (err) {
+                if (err) {
+                    log.error('Error saving company' + err);
+                    return res.json(err);
+                } else {
+                    return res.json({message: 'Company is successfully created.', status_code: res.status_code});
+
+                }
+            });
+
+        } else {
+            return res.json({message: 'Company is created before.', status_code: res.status_code});
+
         }
-        return res.json({message: 'Company is successfully created.', status_code: res.status_code});
     });
+
 });
 
-router.get('/company',function(req,res){
+router.get('/company', function (req, res) {
 
-    Company.find(function(err,company){
+    Company.find(function (err, company) {
 
-        if(err){
+        if (err) {
             return res.json(err);
-        }else{
+        } else {
             res.json(company)
         }
     });
@@ -103,11 +116,11 @@ router.get('/totalCompany', function (req, res) {
     })
 });
 
-router.get('/log', function (req,res) {
+router.get('/log', function (req, res) {
 
 
-    fs.readFile(process.cwd() + '/logs/all.log.txt', function(err, data) {
-        if(err) throw err;
+    fs.readFile(process.cwd() + '/logs/all.log.txt', function (err, data) {
+        if (err) throw err;
         var array = data.toString().split("\n");
 
         res.json(array);

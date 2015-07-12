@@ -12,14 +12,20 @@
                         Sirket Ekleme Formu
                     </div>
                     <div class="panel-body">
-                        <form>
+                        <form name="campanyForm" novalidate>
+
                             <div class="form-group">
                                 <label for="InputCompanyName">Sirket Adi</label>
-                                <input type="text"  name="" class="form-control"
+                                <input type="text" class="form-control"
+                                       name="companyName"
                                        data-ng-model="vm.companyDataModel.name"
                                        id="InputCompanyName"
-                                       placeholder="Sirket Ismi"/>
+                                       placeholder="Sirket Ismi" required/>
                             </div>
+                            <section class="error" style="color: #FF0000;"
+                                     ng-show="campanyForm.companyName.$error.required">
+                                Sirket Ismi Bos Olamaz !!!
+                            </section>
 
 
                             <div class="form-group">
@@ -49,10 +55,17 @@
                             <div class="form-group">
                                 <label for="InputCompanyCity">Sirket Sehri</label>
                                 <input type="text" class="form-control"
+
                                        data-ng-model="vm.companyDataModel.city"
+                                       name="companycity"
                                        id="InputCompanyCity"
-                                       placeholder="Sirket Sehri"/>
+                                       placeholder="Sirket Sehri" required/>
                             </div>
+                            
+                            <section class="error" style="color: #FF0000;"
+                                     ng-show="campanyForm.companycity.$error.required">
+                                Sirket Sehri Bos Olamaz !!!
+                            </section>
 
                             <div class="form-group">
                                 <label for="InputCompanySector">Sirket Sektoru</label>
@@ -82,7 +95,9 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="button" value="Secimi Gonder" ng-click="vm.createCompany()"
+                                <input type="button" value="Secimi Gonder"
+                                       ng-disabled="campanyForm.$invalid"
+                                       ng-click="vm.createCompany()"
                                        class="btn btn-success">
                             </div>
                         </form>

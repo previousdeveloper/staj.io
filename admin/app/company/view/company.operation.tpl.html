@@ -1,0 +1,36 @@
+<div>
+    <form class="form-inline">
+        <table datatable="ng" dt-options="vm.dtOptions"
+               dt-instance="vm.dtInstance"
+               dt-column-defs="vm.dtColumnDefs"
+               class="row-border hover">
+            <thead>
+            <tr>
+                <th>Sirket Ismi</th>
+                <th>Sirket Adresi</th>
+                <th>Sirket Maili</th>
+                <th>Sirket Sehiri</th>
+                <th>Sirket Sektoru</th>
+                <th>Sirket Bilgileri</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="company in vm.allCompany">
+                <td>{{ company.name }}</td>
+                <td>{{ company.address }}</td>
+                <td>{{ company.email }}</td>
+                <td>{{ company.city }}</td>
+                <td>{{ company.sector }}</td>
+                <td>{{ company.information }}</td>
+                <td>
+                    <button type="button" ng-click="showCase.modifyPerson($index)" class="btn btn-warning"><i
+                            class="fa fa-edit"></i></button>
+                    <button type="button" ng-click="vm.deleteCompany(company._id)" class="btn btn-danger"><i
+                            class="fa fa-trash-o"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

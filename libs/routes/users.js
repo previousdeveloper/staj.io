@@ -26,7 +26,7 @@ router.post('/signUp', function (req, res) {
             if (currentUser) {
                 return res.json({
                     type: false,
-                    message: "Kullanıcı mevcut"
+                    message: "Kullanici mevcut"
                 });
             } else {
 
@@ -42,7 +42,7 @@ router.post('/signUp', function (req, res) {
                 ) {
                     return res.json({
                         type: false,
-                        message: 'Kullanıcı adı veya şifre boş olamaz'
+                        message: 'Kullanici adi veya sifre bos olamaz'
 
                     });
 
@@ -72,7 +72,7 @@ router.post('/signUp', function (req, res) {
                                 if (!err) {
                                     return res.json({
                                         type: true,
-                                        message: 'kullanıcı başarıyla oluşturuldu'
+                                        message: 'Kullanici olusturuldu'
                                     });
                                 } else {
                                     return log.error(err);

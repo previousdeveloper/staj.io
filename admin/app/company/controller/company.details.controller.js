@@ -2,44 +2,67 @@
 
 angular
     .module('company.module')
-    .controller('DetailsCompanyCtrl', DetailsCompanyCtrl);
+    .controller('CompanyDetails', CompanyDetails);
 
-DetailsCompanyCtrl.$inject = ['$scope', 'logger', 'companyCreateService', 'toaster'];
+CompanyDetails.$inject = ['$scope', 'logger',
+    'companyDetailsService', 'toaster', 'DTOptionsBuilder', 'DTColumnDefBuilder'];
 
-function DetailsCompanyCtrl($scope, logger, companyCreateService, toaster) {
+function CompanyDetails($scope, logger,
+                        companyDetailsService, toaster, DTOptionsBuilder, DTColumnDefBuilder) {
     /* jshint validthis: true */
     var vm = this;
 
 
-    vm.companyDataModel = {
-        name: '',
-        email: '',
-        address: '',
-        websiteUrl: '',
-        city: '',
-        sector: '',
-        information: '',
-        imgurl: ''
+    init();
+
+
+    function getAllCompany() {
+        companyDetailsService.getAllCompany().then(function (result) {
+
+                if (result !== null && result !== undefined) {
+                    vm.allCompany = result;
+                }
+
+            },
+            function (err) {
+                vm.allCompany = err;
+            });
+    }
+
+
+    vm.deleteCompany = function (id) {
+
+
+
+        if (confirm("Sirketi Silmek istiyor musun ?") == true) {
+
+            companyDetailsService.deleteCompany(id).then(function (result) {
+
+                if (result !== null && result !== undefined) {
+                    getAllCompany();
+                }
+            });
+
+        } else {
+
+        }
+
     };
 
 
-    vm.createCompany = function () {
+    function init() {
+        vm.dtInstance = {};
+        vm.dtOptions = DTOptionsBuilder
+            .newOptions()
+            .withPaginationType('full_numbers');
 
-        companyCreateService.createCompany(vm.companyDataModel).then(function (result) {
-
-                if (result.name === 'ValidationError') {
-                    toaster.pop('error', "Sirket Ekleme Basarisiz", result.message);
-
-                } else {
-                    toaster.pop('success', "Sirket Ekleme Basarili", result.message);
-                    vm.companyDataModel = {};
-                }
-            },
-            function (err) {
-                toaster.pop('error', "Sirket Ekleme Basarisiz", result.message);
-                vm.result = result
-            });
-
+        vm.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2),
+            DTColumnDefBuilder.newColumnDef(3).notSortable()
+        ];
+        getAllCompany();
     }
 
 

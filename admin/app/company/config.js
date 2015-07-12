@@ -15,5 +15,6 @@ angular
       data: {
         pageTitle: 'Sirket Ekleme Sayfasi'
       }
-    });
+    })
+
   });

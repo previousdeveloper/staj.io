@@ -3,7 +3,7 @@
 angular.module('demoApp', [
     'demoApp.home',
     'company.module',
-    'signUp.module',
+    'user.module',
     'login.module',
     'blocks.logging',
     'blocks.exception',
@@ -62,6 +62,10 @@ function configure($stateProvider, $urlRouterProvider, $httpProvider) {
             responseError: function (response) {
                 if (response.status === 401){
                     $location.url('/login');
+                }
+                if(response.status == 0) {
+                    window.location = "../admin/index.html#/signup";
+                    return;
                 }
                 if(response.status===403){
                     $location.url('/login');

@@ -62,13 +62,13 @@
     <h3>Icerik</h3>
     <ul class="toggle">
         <li class="icn_new_article"><a href="#/addcompany">Yeni Sirket Ekle</a></li>
-        <li class="icn_edit_article"><a href="#">Sirket Bilgilerini duzenle</a></li>
+        <li class="icn_edit_article"><a href="#/companydetails">Sirket Bilgilerini duzenle</a></li>
         <!--<li class="icn_categories"><a href="#">Categories</a></li>-->
         <!--<li class="icn_tags"><a href="#">Tags</a></li>-->
     </ul>
     <h3>Kullanicilar</h3>
     <ul class="toggle">
-        <li class="icn_add_user"><a href="#/about">Yeni Kullanici Ekle</a></li>
+        <li class="icn_add_user"><a href="#/adduser">Yeni Kullanici Ekle</a></li>
         <li class="icn_view_users"><a href="#">Tum kullanicilari Gor</a></li>
         <li class="icn_profile"><a href="#">Profil Detayim</a></li>
     </ul>
@@ -137,7 +137,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#/update">
+                        <a href="#/companydetails">
                             <div class="panel-footer">
                                 <span class="pull-left">Detaylari Goruntule</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -160,7 +160,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="#/home">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -226,11 +226,11 @@
                     </thead>
                     <tbody ng-repeat="totalUser in vm.totalUser.slice().reverse() | limitTo:10">
                     <tr>
-                        <td><input type="checkbox"></td>
-                        <td>{{totalUser.name}}</td>
-                        <td>{{totalUser.email}}</td>
-                        <td>{{totalUser.username}}</td>
-                        <td>{{totalUser.created}}</td>
+                        <td ><input type="checkbox"></td>
+                        <td style="width:auto;">{{totalUser.name}}</td>
+                        <td > {{totalUser.email}}</td>
+                        <td font size="6">{{totalUser.username}}</td>
+                        <td font size="1">{{totalUser.created}}</td>
                         <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image"
                                                                                               src="images/icn_trash.png"
                                                                                               title="Trash"></td>
@@ -294,28 +294,28 @@
     <div class="clear"></div>
 
     <article class="module width_full">
-        <header><h3>Post New Article</h3></header>
+        <header><h3>Push Gonder</h3></header>
         <div class="module_content">
             <fieldset>
-                <label>Post Title</label>
+                <label>Baslik</label>
                 <input type="text">
             </fieldset>
             <fieldset>
-                <label>Content</label>
+                <label>Icerik</label>
                 <textarea rows="12"></textarea>
             </fieldset>
             <fieldset style="width:48%; float:left; margin-right: 3%;">
                 <!-- to make two field float next to one another, adjust values accordingly -->
                 <label>Category</label>
-                <select style="width:92%;">
-                    <option>Articles</option>
-                    <option>Tutorials</option>
-                    <option>Freebies</option>
-                </select>
+                <!--<select style="width:92%;">-->
+                    <!--<option>Articles</option>-->
+                    <!--<option>Tutorials</option>-->
+                    <!--<option>Freebies</option>-->
+                <!--</select>-->
             </fieldset>
             <fieldset style="width:48%; float:left;">
                 <!-- to make two field float next to one another, adjust values accordingly -->
-                <label>Tags</label>
+                <label>Hangi Cihaz</label>
                 <input type="text" style="width:92%;">
             </fieldset>
             <div class="clear"></div>
@@ -323,11 +323,11 @@
         <footer>
             <div class="submit_link">
                 <select>
-                    <option>Draft</option>
-                    <option>Published</option>
+                    <!--<option>Draft</option>-->
+                    <option>Yayinla</option>
                 </select>
-                <input type="submit" value="Publish" class="alt_btn">
-                <input type="submit" value="Reset">
+                <input type="submit" value="Gonder" class="alt_btn">
+                <input type="submit" value="Temizle">
             </div>
         </footer>
     </article>
