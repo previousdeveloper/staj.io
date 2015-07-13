@@ -20,6 +20,7 @@ function HomeCtrl($scope, $http, homeService, localStorageService, $location, to
                 if (result !== null && result !== undefined) {
 
                     if (!localStorageService.get('popup')) {
+
                         toaster.pop('success', 'Giris Basarili', 'Hosgeldin' + ' ' + result.name);
                     } else {
 

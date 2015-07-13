@@ -4,9 +4,9 @@ angular
     .module('login.module')
     .controller('LoginCtrl', LoginCtrl);
 
-LoginCtrl.$inject = ['$scope', 'loginService', '$location', 'localStorageService'];
+LoginCtrl.$inject = ['$scope', 'loginService', '$location', 'localStorageService', '$rootScope'];
 
-function LoginCtrl($scope, loginService, $location, localStorageService) {
+function LoginCtrl($scope, loginService, $location, localStorageService, $rootScope) {
 
     var vm = this;
 
@@ -33,6 +33,7 @@ function LoginCtrl($scope, loginService, $location, localStorageService) {
 
 
                     $location.path('/home');
+
                 }
 
             },
@@ -42,6 +43,5 @@ function LoginCtrl($scope, loginService, $location, localStorageService) {
             });
 
     };
-
 
 }

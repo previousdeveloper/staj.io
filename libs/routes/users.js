@@ -94,17 +94,19 @@ router.get('/user', passport.authenticate('bearer', {session: false}), function 
 
     if (res !== undefined) {
 
-       return res.json({
+
+        return res.json({
 
             userId: req.user._id,
             username: req.user.username,
             name: req.user.name,
-            email: req.user.email
+            email: req.user.email,
+            role: req.user.role
         });
-    }else{
+    } else {
         return res.json({
-            type:false,
-            message:'Kullanici bilgisi hatasi'
+            type: false,
+            message: 'Kullanici bilgisi hatasi'
         })
     }
 
@@ -123,7 +125,7 @@ router.post('/changePassword', passport.authenticate('bearer', {session: false})
             user.save(function (err) {
                 if (err) {
                     return res.json({
-                        message:err
+                        message: err
                     });
                 } else {
                     return res.json({message: 'Password changed.'})
@@ -155,8 +157,8 @@ router.post('/addCompany', passport.authenticate('bearer', {session: false}), fu
         });
     }
     return res.json({
-        type:true,
-        message:'Sirket takip listesine eklendi'
+        type: true,
+        message: 'Sirket takip listesine eklendi'
     });
 });
 
@@ -169,7 +171,7 @@ router.post('/updateInformation', passport.authenticate('bearer', {session: fals
             user.save(function (err) {
                 if (err) {
                     return res.json({
-                        message:err
+                        message: err
                     });
                 } else {
                     return res.json({message: 'Email adresi guncellendi.'})
@@ -193,7 +195,7 @@ router.get('/favored', passport.authenticate('bearer', {session: false}), functi
 
                 if (result.length == 0) {
                     return res.json({
-                        message:'Herhangi bir favori sirketin yok:('
+                        message: 'Herhangi bir favori sirketin yok:('
                     });
                 } else {
                     return res.json(result);

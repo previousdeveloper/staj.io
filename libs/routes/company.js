@@ -28,11 +28,20 @@ Company.find(function (err, results) {
 
 router.get('/company', function (req, res) {
     myCache.get("companyList", function (err, results) {
+
         if (!err) {
+
             return res.json(results);
         }
     });
 });
+
+
+router.get('/company2', function (req, res) {
+
+    res.json('data');
+});
+
 
 
 router.get('/sectorAndCity/:sector/:city', function (req, res) {

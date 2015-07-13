@@ -29,8 +29,16 @@ angular.module('demoApp', [
     })
 
 ;
-run.$inject = ['$http'];
-function run($http) {
+run.$inject = ['$http', '$rootScope', '$state', '$location', 'loginService'];
+function run($http, $rootScope, $state, $location, loginService) {
+
+    $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+        if (toState.views.main.authenticate && loginService.getCurrentUser() !== 'admin') {
+            // User isn’t authenticated
+            $state.transitionTo("login");
+            event.preventDefault();
+        }
+    });
 
 }
 
@@ -38,7 +46,7 @@ configure.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider']; /
 
 function configure($stateProvider, $urlRouterProvider, $httpProvider) {
 
-    var token ;
+    var token;
     $httpProvider.interceptors.push(function ($q, $location, localStorageService) {
 
 
@@ -49,7 +57,7 @@ function configure($stateProvider, $urlRouterProvider, $httpProvider) {
                 return response;
             },
             request: function (config) {
-                 token = localStorageService.get('accessToken');
+                token = localStorageService.get('accessToken');
 
                 config.headers = config.headers || {};
                 if (token) {
@@ -60,14 +68,14 @@ function configure($stateProvider, $urlRouterProvider, $httpProvider) {
                 return config;
             },
             responseError: function (response) {
-                if (response.status === 401){
+                if (response.status === 401) {
                     $location.url('/login');
                 }
-                if(response.status == 0) {
+                if (response.status == 0) {
                     window.location = "../admin/index.html#/signup";
                     return;
                 }
-                if(response.status===403){
+                if (response.status === 403) {
                     $location.url('/login');
                 }
 
@@ -79,13 +87,13 @@ function configure($stateProvider, $urlRouterProvider, $httpProvider) {
     // toastr.options.timeOut = 4000;
     //toastr.options.positionClass = 'toast-bottom-right';
 
-    if(token===undefined || token===null || token===''){
-        $urlRouterProvider.otherwise('/login');
-    }else{
-        $urlRouterProvider.otherwise('/home');
-    }
 
-
+    //if ($window.currentUser !== null || $window.currentUser !== undefined) {
+    //    $urlRouterProvider.otherwise('/home');
+    //} else {
+    //    $urlRouterProvider.otherwise('/login');
+    //}
+    $urlRouterProvider.otherwise('/login');
 
 
 }
