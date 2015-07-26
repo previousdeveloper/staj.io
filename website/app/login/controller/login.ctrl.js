@@ -19,6 +19,7 @@ function LoginCtrl($scope, loginService, $location, localStorageService, $rootSc
         'username': '',
         'password': ''
     };
+    vm.sampleData= "data";
 
 
 

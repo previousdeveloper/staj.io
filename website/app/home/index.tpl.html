@@ -2,7 +2,12 @@
     <div class="content-wrapper">
         <div class="item-container">
             <div class="container">
+                <div class="badge" style="float: right;">
+    <span class="badge">    Toplam {{vm.totalCompany}} sonuc gosteriliyor.
 
+</span>
+
+                </div>
 
                 <div class="col-md-4">
 
@@ -22,6 +27,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -47,7 +53,8 @@
 
                 </div>
                 <div class="col-lg-7" ng-if="vm.allCompany.length===0">
-                    <img class="img-responsive center-block" src="http://ecx.images-amazon.com/images/I/51v2DyrMvDL._SX425_.jpg">
+                    <img class="img-responsive center-block"
+                         src="http://ecx.images-amazon.com/images/I/51v2DyrMvDL._SX425_.jpg">
 
                     <h3 class="img-responsive center-block">Üzgünüm,
                         Tüm Aramalarıma Rağmen Belirttiğiniz
@@ -62,15 +69,14 @@
                         <img id="item-display" style="margin-top: 8px" height="80" width="80"
                              src="{{companyDetails.imgUrl}}"
                              alt="">
-                        <a class="product-desc" style="margin-top: 20px"
-                           ng-href="{{companyDetails.websiteUrl}}">Website</a>
 
 
                     </div>
 
                     <div class="col-md-8">
                         <div class="product-title" style="margin-top: 8px">{{companyDetails.name}}</div>
-                        <!--<div class="product-rating"><i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star-o"></i> </div>-->
+
+
                         <hr>
                         <div class="glyphicon glyphicon-info-sign">{{companyDetails.sector}}</div>
                         <hr>
@@ -97,6 +103,7 @@
                                 Listeden Sil
                             </button>
                         </div>
+
                         </span>
                         <hr>
                     </div>
@@ -112,32 +119,34 @@
                                 </pane>
                             </tabs>
                         </div>
-
+                        <a class="btn btn-success btn-group-justified" role="button"
+                           style="margin-top: 20px;color: #fff;"
+                           ng-href="{{companyDetails.websiteUrl}}">Ilana Basvur
+                        </a>
                     </div>
-
 
                 </div>
             </div>
             <div class="clearfix" ng-if="vm.paginationFilter===false">
-                <ul class="pagination pagination-lg"  style="float:right;margin-bottom:50px">
+                <ul class="pagination pagination-lg" style="float:right;margin-bottom:50px">
                     <li><a>&laquo;</a></li>
                     <li ng-repeat="count in vm.allButtonCount">
                         <a href="" class="active" scroll-to="container-fluid"
                            data-ng-click="vm.getCompanyPagination(count)">{{count+1}}</a></li>
                     <li><a>&raquo;</a></li>
-                    <!--Toplam{{vm.allButtonCount.length}} sayfadan {{count}}-->
                 </ul>
             </div>
 
             <div class="clearfix" ng-if="vm.paginationFilter===true">
-                <ul class="pagination pagination-lg"  style="float:right;margin-bottom:50px;">
+                <ul class="pagination pagination-lg" style="float:right;margin-bottom:50px;">
                     <li><a>&laquo;</a></li>
                     <li ng-repeat="count in vm.allButtonCountFiltered">
                         <a href="" class="active" scroll-to="container-fluid"
-                           data-ng-click="vm.getFilteredCompany(count,vm.selectedItemCityList.name,vm.selectedItemSectorList.name)">{{count+1}}</a></li>
+                           data-ng-click="vm.getFilteredCompany(count,vm.selectedItemCityList.name,vm.selectedItemSectorList.name)">{{count+1}}</a>
+                    </li>
                     <li><a>&raquo;</a></li>
-                    <!--Toplam{{vm.allButtonCount.length}} sayfadan {{count}}-->
                 </ul>
+
             </div>
 
 

@@ -63,6 +63,7 @@ router.get('/sectorAndCity', function (req, res) {
                         company: result
                         , page: page
                         , pages: pages
+                        ,count:count
                     });
                 }
 
@@ -87,6 +88,7 @@ router.get('/companies', function (req, res) {
                         company: result
                         , page: page
                         , pages: Math.ceil(count / perPage)
+                        ,count:count
                     });
                 }
 

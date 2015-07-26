@@ -22,6 +22,7 @@ function CompanyDetails($scope, logger,
                 if (result !== null && result !== undefined) {
                     vm.allCompany = result.company;
                     vm.pageCount = result.pages;
+                    vm.totalCompany  =result.count;
                     vm.paginationFilter =false;
                     if (vm.allButtonCount.length === 0) {
 
@@ -43,6 +44,7 @@ function CompanyDetails($scope, logger,
                 if (result !== null && result !== undefined) {
                     vm.allCompany = result.company;
                     vm.pageCountFiltered = result.pages;
+                    vm.totalCompany  =result.count;
                     vm.paginationFilter= true;
                     if (vm.allButtonCountFiltered.length === 0) {
 
