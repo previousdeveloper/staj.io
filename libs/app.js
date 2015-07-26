@@ -1,10 +1,9 @@
 'use strict';
 
 var express = require('express');
-var cookieParser = require('cookie-parser');
+var helmet = require('helmet');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var methodOverride = require('method-override');
 var ConnectRoles = require('connect-roles');
 var libs = process.cwd() + '/libs/';
 require(libs + 'auth/auth');
@@ -25,18 +24,22 @@ var roles = new ConnectRoles();
 
 var cors = require('cors');
 
+
+//HELMET SECURITY
+app.use(helmet.frameguard());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.options(cors({origin: "*"}));
 app.use(cors({origin: "*"}));
 
-//app.use(cookieParser());
-//app.use(methodOverride());
+
 app.use(passport.initialize());
 app.use(roles.middleware());
 
 
+//Helment Impl
 app.use(function (req, res, next) {
     res.removeHeader("x-powered-by");
     next();

@@ -45,7 +45,7 @@ function login($http, $q, localStorageService, $rootScope) {
 
         $http.get('http://localhost:3000/api/v1/user')
             .then(function (result) {
-                 
+
                 localStorageService.set('roles',result.data.role);
 
             });

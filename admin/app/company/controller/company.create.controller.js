@@ -27,12 +27,15 @@ function CreateCompanyCtrl($scope, logger, companyCreateService, toaster) {
 
         companyCreateService.createCompany(vm.companyDataModel).then(function (result) {
 
-                if (result.name === 'ValidationError') {
+                if (result.message === 'ValidationError') {
                     toaster.pop('error', "Sirket Ekleme Basarisiz", result.message);
 
-                } else {
-                    toaster.pop('success', "Sirket Ekleme Basarili", result.message);
+                } else if(result.message === 'Company is created before.'){
+                    toaster.pop('error', "Sirket Ekleme Basarisiz", result.message);
                     vm.companyDataModel = {};
+                }else{
+                    toaster.pop('success', "Sirket Ekleme Basarili", result.message);
+
                 }
             },
             function (err) {

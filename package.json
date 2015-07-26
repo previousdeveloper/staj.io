@@ -19,6 +19,7 @@
     "express": "~4.10.x",
     "gulp": "^3.8.11",
     "gulp-jshint": "^1.9.4",
+    "helmet": "^0.10.0",
     "jshint": "^2.6.3",
     "method-override": "^2.3.x",
     "mongoosastic": "^2.1.3",

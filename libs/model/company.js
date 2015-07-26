@@ -14,7 +14,7 @@ var companySchema = new Schema({
     address: {type: String, es_boost: 2.0},
     websiteUrl: {type: String, es_boost: 2.0},
     phone: {type: String, es_boost: 2.0},
-    imgUrl: String,
+    imgUrl: {type: String, es_boost: 2.0},
     created: {
         type: Date,
         default: Date.now

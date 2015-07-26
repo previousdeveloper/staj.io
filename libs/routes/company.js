@@ -8,7 +8,7 @@ var libs = process.cwd() + '/libs/';
 var db = require(libs + 'db/mongoose');
 var log = require(libs + 'log')(module);
 
-var myCache = new NodeCache();
+        var myCache = new NodeCache();
 
 Company.find(function (err, results) {
 
@@ -37,26 +37,37 @@ router.get('/company', function (req, res) {
 });
 
 
-router.get('/company2', function (req, res) {
-
-    res.json('data');
-});
 
 
+router.get('/sectorAndCity', function (req, res) {
 
-router.get('/sectorAndCity/:sector/:city', function (req, res) {
+    var sector = req.query.sector;
+    var city = req.query.city;
 
-    var sector = req.params.sector;
-    var city = req.params.city;
+    var perPage = 5
+        , page = req.param('page') > 0 ? req.param('page') : 0;
+    Company
+        .find({'sector': sector, 'city': city})
+        .limit(perPage)
+        .skip(perPage * page)
+        .exec(function (err, result) {
+            Company.find({'sector': sector, 'city': city}).count().exec(function (err, count) {
+                var pages =Math.round(count / perPage);
+                if(pages===0){
+                    pages++;
+                }
+                if (err) {
+                    return res.json({message: 'Hata Meydana Geldi.'});
+                } else {
+                    res.json('company', {
+                        company: result
+                        , page: page
+                        , pages: pages
+                    });
+                }
 
-    Company.find({'sector': sector, 'city': city}, function (err, results) {
-        if (err) {
-            return res.json(err);
-        } else {
-            return res.json(results);
-        }
-
-    });
+            })
+        });
 });
 
 
@@ -75,7 +86,7 @@ router.get('/companies', function (req, res) {
                     res.json('company', {
                         company: result
                         , page: page
-                        , pages: count / perPage
+                        , pages: Math.ceil(count / perPage)
                     });
                 }
 
@@ -89,7 +100,7 @@ router.get('/cityList', function (req, res) {
     Company.count().find().select('city').exec(function (err, results) {
 
         if (err) {
-            return res.json(er);
+            return res.json(err);
         }
         else {
             return res.json(results);
@@ -99,7 +110,7 @@ router.get('/cityList', function (req, res) {
 
 });
 
-router.get('/sector/:sector', function (req, res) {
+router.get('/sector', function (req, res) {
 
     var sector = req.query.sector;
 

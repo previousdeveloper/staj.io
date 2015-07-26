@@ -1,0 +1,30 @@
+<div class="col-md-12" style="background-color:#3081cd">
+    <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <a class="btn btn-transp navbar-btn btn-sm" href="">Firma Girişi</a>
+            <a class="btn btn-transp navbar-btn " data-toggle="modal" id="showLogin2" href="#">Giriş</a>
+            <a class="btn btn-transp navbar-btn " data-toggle="modal" id="showSignUp2" href="#">Kayıt Ol</a>
+
+        </button>
+
+        <a class="navbar-brand" href="#/home"><img style="vertical-align:middle;">Staj.io</a>
+
+    </div>
+    <div class="modalist">
+        <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right" ng-controller="LoginCtrl as vm">
+            <a class="btn btn-transp navbar-btn btn-sm" href="http://kariro.com/isveren">Firma Girişi</a>
+            <!--<a class="btn btn-transp  navbar-btn" data-ng-show="vm.authentication.isAuth" data-toggle="modal" id="showUsername" href="">{{vm.signInResult.access_token}}</a>-->
+            <!--<a class="btn btn-transp  navbar-btn" data-ng-show="vm.authentication.isAuth" ng-click="vm.logout()" data-toggle="modal" id="showLogout" href="#/home" >Cikis</a>-->
+            <a class="btn btn-transp  navbar-btn"  data-toggle="modal" id="showLogin" href="#/login">Giriş</a>
+            <a class="btn btn-transp navbar-btn "  data-toggle="modal" id="showSignUp" href="#/adduser">Kayıt Ol</a>
+        </div>
+    <div class="col-lg-6">
+        <form class="navbar-form " role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Arama..">
+            </div>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        </form>
+    </div>
+</div>

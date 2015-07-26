@@ -23,7 +23,7 @@ router.post("/company", function (req, res) {
             company.city = req.body.city;
             company.sector = req.body.sector;
             company.information = req.body.information;
-            company.imgurl = req.body.imgurl;
+            company.imgUrl = req.body.imgurl;
 
             company.save(function (err) {
                 if (err) {

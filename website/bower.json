@@ -1,0 +1,16 @@
+{
+  "name": "ng-boilerplate",
+  "version": "0.3.2",
+  "devDependencies": {
+    "angular": "~1.2",
+    "angular-mocks": "~1.2",
+    "bootstrap": "~3.1",
+    "angular-bootstrap": "~0.10.0",
+    "angular-ui-router": "~0.2"
+  },
+  "dependencies": {
+    "angular-local-storage": "~0.2.2",
+    "angularjs-toaster": "~0.4.15",
+    "angular-datatables": "latest"
+  }
+}
