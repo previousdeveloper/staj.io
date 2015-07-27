@@ -12,11 +12,12 @@
     <link href="assets/layout.css" rel="stylesheet">
     <link href="assets/panel.css" rel="stylesheet">
     <link href="bower_components/angularjs-toaster/toaster.min.css" rel="stylesheet">
-    <link href="bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
 
 </head>
 
 <body>
+<toaster-container></toaster-container>
+
 <div ng-include="'layout/header.html'"></div>
 
 <div class="col-md-12">
@@ -82,7 +83,6 @@
 
 <!--CompanyCreateJs-->
 <script type="text/javascript" src="app/company/company.module.js"></script>
-<script type="text/javascript" src="app/company/config.js"></script>
 
 
 <!--CompanyDetailsJs-->

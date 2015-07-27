@@ -11,7 +11,11 @@ function CompanyDetails($scope, logger,
                         companyDetailsService, toaster, DTOptionsBuilder, DTColumnDefBuilder, $rootScope) {
     /* jshint validthis: true */
     var vm = this;
+    vm.searchInput = null;
 
+    vm.search = {
+        q: ''
+    };
 
     init();
 
@@ -22,8 +26,8 @@ function CompanyDetails($scope, logger,
                 if (result !== null && result !== undefined) {
                     vm.allCompany = result.company;
                     vm.pageCount = result.pages;
-                    vm.totalCompany  =result.count;
-                    vm.paginationFilter =false;
+                    vm.totalCompany = result.count;
+                    vm.paginationFilter = 'allCompany';
                     if (vm.allButtonCount.length === 0) {
 
                         for (var i = 0; i < vm.pageCount; i++) {
@@ -44,8 +48,8 @@ function CompanyDetails($scope, logger,
                 if (result !== null && result !== undefined) {
                     vm.allCompany = result.company;
                     vm.pageCountFiltered = result.pages;
-                    vm.totalCompany  =result.count;
-                    vm.paginationFilter= true;
+                    vm.totalCompany = result.count;
+                    vm.paginationFilter = 'filteredCompany';
                     if (vm.allButtonCountFiltered.length === 0) {
 
                         for (var i = 0; i < vm.pageCountFiltered; i++) {
@@ -61,10 +65,36 @@ function CompanyDetails($scope, logger,
     };
 
 
+    vm.getSearchedCompany = function (data, page) {
+        companyDetailsService.getSearch(vm.search, page).then(function (result) {
+
+                if (result !== null && result !== undefined) {
+
+
+                    vm.allCompany = result.company;
+                    vm.pageCountSearched = result.pages;
+                    vm.totalCompany = result.count;
+                    vm.paginationFilter = 'searchedCompany';
+                    if (vm.allButtonCountSearched.length === 0) {
+
+                        for (var i = 0; i < vm.pageCountSearched; i++) {
+                            vm.allButtonCountSearched.push(i);
+                        }
+                    }
+                }
+
+            },
+            function (err) {
+                vm.allCompany = err;
+            });
+    };
+
+
     function init() {
 
         vm.allButtonCount = [];
         vm.allButtonCountFiltered = [];
+        vm.allButtonCountSearched = [];
         vm.selectedItemCityList = null;
         vm.selectedItemSectorList = null;
         vm.paginationFilter = null;

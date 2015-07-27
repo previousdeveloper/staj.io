@@ -1,0 +1,187 @@
+<div class="container-fluid" id="container-fluid" ng-init="vm.getCompanyPagination(0)">
+    <div class="content-wrapper">
+        <div class="item-container">
+            <div class="container">
+
+
+
+                <div class="col-md-4">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#categories">
+                                    Sektorler
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="sector" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <select class="form-control ajax" ng-model="vm.selectedItemSectorList"
+                                        ng-init="vm.selectedItemSectorList=vm.sectorList[0]"
+                                        ng-options="item as item.name for item in vm.sectorList"></select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#categories">
+                                    Sehirler
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="city" class="panel-collapse collapse in">
+                            <div class="panel-body">
+
+                                <select class="form-control ajax" ng-model="vm.selectedItemCityList"
+                                        ng-init="vm.selectedItemCityList=vm.cityList[0]"
+                                        ng-options="city as city.name for city in vm.cityList"></select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" class="btn btn-block btn-success"
+                           ng-click="vm.getFilteredCompany(0,vm.selectedItemCityList.name,vm.selectedItemSectorList.name)"
+                           value="Sec">
+
+                </div>
+
+                <form class="navbar-form" >
+                    <div id="custom-search-input">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-lg" ng-model="vm.search.q" placeholder="Şirket ismi,Sektör,Konum..." />
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary btn-lg" value="Ara"  data-ng-click="vm.getSearchedCompany(vm.search.q,0)" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                        </div>
+                    </div>
+                </form>
+
+                <h5 class="text-center" ng-if="vm.allCompany.length===0">Üzgünüm,
+                    Tüm Aramalarıma Rağmen Belirttiğiniz
+                    Kriterlerde Sonuç Bulamadım.</h5>
+
+                <div class="badge" ng-if="!vm.allCompany.length==0" style="float: left;">
+                    <span class="badge">    Toplam {{vm.totalCompany}} sonuc bulundu.</span>
+                </div>
+                <div class="col-md-8" ng-repeat="companyDetails in vm.allCompany"
+                     style="outline: 1px solid;float: right">
+
+
+                    <div class=" col-md-2 service-image-left">
+
+                        <img id="item-display" style="margin-top: 8px" height="80" width="80"
+                             src="{{companyDetails.imgUrl}}"
+                             alt="">
+
+
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="product-title" style="margin-top: 8px">{{companyDetails.name}}</div>
+
+
+                        <hr>
+                        <div class="glyphicon glyphicon-info-sign">{{companyDetails.sector}}</div>
+                        <hr>
+
+                        <span class=".col-md-2">
+                        <div class="glyphicon glyphicon-envelope">{{companyDetails.email}}</div>
+                        </span>
+
+                        <span class=".col-md-2">
+                        <div class="fa fa-map-marker">{{companyDetails.city}}</div>
+                            </span>
+
+                        <div class="fa fa-clock-o">{{companyDetails.created}}</div>
+
+                        <hr>
+                        <span class=".col-md-2">
+                             <div class="btn-group cart">
+                                 <button type="button" class="btn btn-success">
+                                     Listeye Ekle
+                                 </button>
+                             </div>
+                        <div class="btn-group wishlist">
+                            <button type="button" class="btn btn-danger">
+                                Listeden Sil
+                            </button>
+                        </div>
+
+                        </span>
+                        <hr>
+                    </div>
+
+                    <div class="container-fluid" style="margin-bottom: 25px">
+                        <div class="col-md-8 ">
+                            <tabs>
+                                <pane title="Sirket Bilgisi">
+                                    <div>{{companyDetails.information}}</div>
+                                </pane>
+                                <pane title="Konum">
+                                    <div>{{companyDetails.address}}</div>
+                                </pane>
+                            </tabs>
+                        </div>
+                        <a class="btn btn-success btn-group-justified" role="button"
+                           style="margin-top: 20px;color: #fff;"
+                           ng-href="{{companyDetails.websiteUrl}}">Ilana Basvur
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="clearfix" ng-if="vm.paginationFilter==='allCompany'">
+                <ul class="pagination-sm pagination" style="float:right;margin-bottom:50px">
+                    <li><a>&laquo;</a></li>
+                    <li ng-repeat="count in vm.allButtonCount">
+                        <a href="" class="active" scroll-to="container-fluid"
+                           data-ng-click="vm.getCompanyPagination(count)">{{count+1}}</a></li>
+                    <li><a>&raquo;</a></li>
+
+                </ul>
+
+            </div>
+
+            <div class="clearfix" ng-if="vm.paginationFilter==='filteredCompany'">
+                <ul class="pagination-sm pagination" style="float:right;margin-bottom:50px;">
+                    <li><a>&laquo;</a></li>
+                    <li ng-repeat="count in vm.allButtonCountFiltered">
+                        <a href="" class="active" scroll-to="container-fluid"
+                           data-ng-click="vm.getFilteredCompany(count,vm.selectedItemCityList.name,vm.selectedItemSectorList.name)">{{count+1}}</a>
+                    </li>
+                    <li><a>&raquo;</a></li>
+                </ul>
+
+            </div>
+
+
+
+            <div class="clearfix" ng-if="vm.paginationFilter==='searchedCompany'">
+                <ul class="pagination-sm pagination" style="float:right;margin-bottom:50px;">
+                    <li><a>&laquo;</a></li>
+                    <li ng-repeat="count in vm.allButtonCountSearched">
+                        <a href="" class="active" scroll-to="container-fluid"
+                           data-ng-click="vm.getSearchedCompany(vm.search.q,count)">{{count+1}}</a>
+                    </li>
+                    <li><a>&raquo;</a></li>
+                </ul>
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
+

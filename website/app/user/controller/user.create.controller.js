@@ -4,12 +4,11 @@ angular
     .module('user.module')
     .controller('UserCreateCtrl', UserCreateCtrl);
 
-UserCreateCtrl.$inject = ['$scope', 'userCreateService', '$location', 'toaster'];
+UserCreateCtrl.$inject = ['$scope', 'userCreateService', 'toaster','$location'];
 
-function UserCreateCtrl($scope, userCreateService, $location, toaster) {
+function UserCreateCtrl($scope, userCreateService, toaster,$location) {
 
     var vm = this;
-    init();
     vm.signUpData = {
 
         'username': '',
@@ -27,9 +26,10 @@ function UserCreateCtrl($scope, userCreateService, $location, toaster) {
                         if (result.message === 'Kullanici mevcut') {
                         toaster.pop('error', "Kullanici Ekleme Basarisiz", result.message);
                     } else if (result.message.name === 'ValidationError') {
-                        toaster.pop('error', "Sirket Ekleme Basarisiz", result.message)
+                        toaster.pop('error', "Kullanici Ekleme Basarisiz", result.message)
                     } else if (result.message === 'Kullanici olusturuldu') {
                         toaster.pop('success', "Kullanici Ekleme Basarili", result.message)
+                            $location.path('/company');
                     }
                 }
 
@@ -39,9 +39,5 @@ function UserCreateCtrl($scope, userCreateService, $location, toaster) {
 
             });
 
-    }
-    function init(){
-        toaster.pop('success', "Kullanici Ekleme Basarili", result.message)
-
-    }
+    };
 }

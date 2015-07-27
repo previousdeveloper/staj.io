@@ -48,44 +48,44 @@ configure.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider']; /
 
 function configure($stateProvider, $urlRouterProvider, $httpProvider) {
 
-    var token;
-    $httpProvider.interceptors.push(function ($q, $location, localStorageService) {
-
-
-        return {
-
-            response: function (response) {
-                // do something on success
-                return response;
-            },
-            request: function (config) {
-                token = localStorageService.get('accessToken');
-
-                config.headers = config.headers || {};
-                if (token) {
-                    config.headers.Authorization = 'Bearer ' + token;
-
-
-                }
-                return config;
-            },
-            responseError: function (response) {
-                if (response.status === 401) {
-                    $location.url('/login');
-                }
-                if (response.status == 0) {
-                    window.location = "../admin/index.html#/signup";
-                    return;
-                }
-                if (response.status === 403) {
-                    $location.url('/login');
-                }
-
-                return $q.reject(response);
-            }
-        };
-
-    });
+    //var token;
+    //$httpProvider.interceptors.push(function ($q, $location, localStorageService) {
+    //
+    //
+    //    return {
+    //
+    //        response: function (response) {
+    //            // do something on success
+    //            return response;
+    //        },
+    //        request: function (config) {
+    //            token = localStorageService.get('accessToken');
+    //
+    //            config.headers = config.headers || {};
+    //            if (token) {
+    //                config.headers.Authorization = 'Bearer ' + token;
+    //
+    //
+    //            }
+    //            return config;
+    //        },
+    //        responseError: function (response) {
+    //            if (response.status === 401) {
+    //                $location.url('/login');
+    //            }
+    //            if (response.status == 0) {
+    //                window.location = "../admin/index.html#/signup";
+    //                return;
+    //            }
+    //            if (response.status === 403) {
+    //                $location.url('/login');
+    //            }
+    //
+    //            return $q.reject(response);
+    //        }
+    //    };
+    //
+    //});
     // toastr.options.timeOut = 4000;
     //toastr.options.positionClass = 'toast-bottom-right';
 
@@ -95,7 +95,7 @@ function configure($stateProvider, $urlRouterProvider, $httpProvider) {
     //} else {
     //    $urlRouterProvider.otherwise('/login');
     //}
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/company');
 
 
 }

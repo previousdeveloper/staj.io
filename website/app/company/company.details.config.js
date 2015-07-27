@@ -3,12 +3,12 @@
 angular
     .module('company.module')
     .config(function config($stateProvider) {
-        $stateProvider.state('home', {
-            url: '/home',
+        $stateProvider.state('company', {
+            url: '/company',
             views: {
                 "main": {
                     controller: 'CompanyDetails',
-                    templateUrl: 'app/home/index.tpl.html',
+                    templateUrl: 'app/company/view/company.operation.tpl.html',
                     controllerAs: 'vm',
                     authenticate: true
                 }

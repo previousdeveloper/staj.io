@@ -5,7 +5,6 @@ var router = express.Router();
 var Company = require('../model/company');
 
 
-
 var stream = Company.synchronize();
 var count = 0;
 
@@ -31,9 +30,38 @@ Company.createMapping(function (err, mapping) {
 });
 
 router.post('/search', function (req, res) {
-    Company.search({query_string: {query: req.body.q}}, {hydrate:true}, function (err, results) {
-       return res.json(results.hits.hits);
-    });
+
+    var page = req.param('page') > 0 ? req.param('page') : 0;
+
+    var query = req.body.q;
+
+    if (page !== null && page !== undefined && query !== null & query !== undefined) {
+        Company.search(
+            {
+                query_string: {
+                    query: query
+                }
+            },
+            {
+
+                from: page * 6,
+                size: 6,
+                hydrate: true
+            },
+            function (err, results) {
+
+                return res.json('company', {
+                    company: results.hits.hits
+                    , page: page
+                    , pages: Math.ceil(results.hits.total / 6)
+                    , count: results.hits.total
+                });
+
+            }
+        );
+    }
+
+
 });
 
 
