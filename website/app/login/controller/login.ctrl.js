@@ -4,13 +4,11 @@ angular
     .module('login.module')
     .controller('LoginCtrl', LoginCtrl);
 
-LoginCtrl.$inject = ['$scope', 'loginService', '$location', 'localStorageService', '$rootScope'];
+LoginCtrl.$inject = ['$scope', 'loginService', '$location', 'localStorageService', '$rootScope','$window','toaster'];
 
-function LoginCtrl($scope, loginService, $location, localStorageService, $rootScope) {
+function LoginCtrl($scope, loginService, $location, localStorageService, $rootScope,$window,toaster) {
 
     var vm = this;
-    init();
-
     vm.loginData = {
 
         'client_id': 'client',
@@ -19,8 +17,8 @@ function LoginCtrl($scope, loginService, $location, localStorageService, $rootSc
         'username': '',
         'password': ''
     };
-    vm.sampleData= "data";
 
+    init();
 
 
     vm.login = function login() {
@@ -31,6 +29,15 @@ function LoginCtrl($scope, loginService, $location, localStorageService, $rootSc
                 if (result.access_token !== null & result.access_token !== undefined) {
                     localStorageService.set('accessToken', result.access_token);
                     localStorageService.set('refreshToken', result.refresh_token);
+
+                    loginService.getCurrentUser().then(function (data) {
+                        localStorageService.set('username',data.username);
+                        localStorageService.set('userId',data.userId);
+                        localStorageService.set('name',data.name);
+                        localStorageService.set('email',data.email);
+                        localStorageService.set('company',data.company);
+                    });
+                    toaster.pop('success', "", 'Giris Basarili');
 
                     $location.path('/home');
 
@@ -49,8 +56,26 @@ function LoginCtrl($scope, loginService, $location, localStorageService, $rootSc
 
     };
 
-    function init(){
-        $rootScope.isLoggedIn = localStorageService.get('accessToken');
+
+    function init() {
+        vm.isAuthed = function () {
+            var token = localStorageService.get('accessToken');
+            if (token) {
+
+                return true;
+
+
+            } else {
+                return false;
+
+            }
+        };
+
+        if (vm.isAuthed()) {
+            vm.username = localStorageService.get('username');
+        }
+
     }
+
 
 }

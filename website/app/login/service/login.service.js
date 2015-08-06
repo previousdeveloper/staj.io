@@ -7,6 +7,7 @@ login.$inject = ['$http', '$q', 'localStorageService'];
 
 function login($http, $q, localStorageService) {
 
+    var vm =this;
 
     var loginService = {
 
@@ -14,7 +15,8 @@ function login($http, $q, localStorageService) {
         getAccessToken: getAccessToken,
         getRefreshToken: getRefreshToken,
         getCurrentUser: getCurrentUser,
-        isAuthenticated:isAuthenticated,
+        addCompany:addCompany,
+        getFavoredList:getFavoredList
     };
 
     return loginService;
@@ -35,30 +37,66 @@ function login($http, $q, localStorageService) {
             }).error(function (err, status, headers, config) {
                 deferred.reject(err);
             });
-        getCurrentUser();
+
+        return deferred.promise;
+
+    }
+    function addCompany(data) {
+
+
+        var deferred = $q.defer();
+
+
+        $http.post('http://localhost:3000/api/v1/addCompany', data)
+            .success(function (response, status, headers, config) {
+
+                deferred.resolve(response);
+
+            }).error(function (err, status, headers, config) {
+                deferred.reject(err);
+            });
 
         return deferred.promise;
 
     }
 
 
+
+
     function getCurrentUser() {
 
+        var deferred = $q.defer();
 
         $http.get('http://localhost:3000/api/v1/user')
-            .then(function (result) {
+            .success(function (response, status, headers, config) {
 
-                localStorageService.set('roles',result.data.role);
+                deferred.resolve(response);
 
+            }).error(function (err, status, headers, config) {
+                deferred.reject(err);
             });
 
-        return localStorageService.get('roles');
+        return deferred.promise;
 
     }
 
-    function isAuthenticated() {
-        return  $rootScope.currentUser ;
+    function getFavoredList() {
+
+        var deferred = $q.defer();
+
+        $http.get('http://localhost:3000/api/v1/favored')
+            .success(function (response, status, headers, config) {
+
+                deferred.resolve(response);
+
+            }).error(function (err, status, headers, config) {
+                deferred.reject(err);
+            });
+
+        return deferred.promise;
+
     }
+
 
 
     function getAccessToken() {
@@ -69,6 +107,8 @@ function login($http, $q, localStorageService) {
 
         localStorageService.get('refreshToken');
     }
+
+
 
 
 }

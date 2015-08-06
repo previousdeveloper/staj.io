@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="demoApp" ng-controller="AppCtrl as appVm" ng-strict-di>
+<html ng-app="staj.io" ng-controller="AppCtrl as appVm" ng-strict-di>
 
 <head>
     <title ng-bind="appVm.pageTitle"></title>
@@ -12,6 +12,7 @@
     <link href="assets/layout.css" rel="stylesheet">
     <link href="assets/panel.css" rel="stylesheet">
     <link href="bower_components/angularjs-toaster/toaster.min.css" rel="stylesheet">
+    <link href="assets/dialogs.min.css" rel="stylesheet">
 
 </head>
 
@@ -32,7 +33,7 @@
 <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script type="text/javascript" src="vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
@@ -61,10 +62,7 @@
 <script type="text/javascript" src="app/core/core.module.js"></script>
 <script type="text/javascript" src="app/core/storage.js"></script>
 
-<script type="text/javascript" src="app/home/home.module.js"></script>
-<script type="text/javascript" src="app/home/config.js"></script>
-<script type="text/javascript" src="app/home/home.controller.js"></script>
-<script type="text/javascript" src="app/home/home.service.js"></script>
+
 
 
 
@@ -75,11 +73,6 @@
 <script type="text/javascript" src="app/login/controller/login.ctrl.js"></script>
 
 
-<!--UserCreateJs-->
-<script type="text/javascript" src="app/user/user.module.js"></script>
-<script type="text/javascript" src="app/user/user.create.config.js"></script>
-<script type="text/javascript" src="app/user/service/user.create.service.js"></script>
-<script type="text/javascript" src="app/user/controller/user.create.controller.js"></script>
 
 <!--CompanyCreateJs-->
 <script type="text/javascript" src="app/company/company.module.js"></script>

@@ -32,8 +32,11 @@ $(this).text(showText);
 $(this).parent().next('.toggle').slideUp('slow');
 }
 
+
 // return false so any link destination is not followed
 return false;
 
 });
+
+
 });

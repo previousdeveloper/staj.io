@@ -12,7 +12,8 @@ function companyDetailsService($http, $q, logger) {
     var service = {
         getAllCompany: getAllCompany,
         getFilteredCompany:getFilteredCompany,
-        getSearch:getSearch
+        getSearch:getSearch,
+        deleteCompany:deleteCompany
     };
 
     return service;
@@ -58,4 +59,17 @@ function companyDetailsService($http, $q, logger) {
     }
 
 
+
+    function deleteCompany(id){
+        var deferred = $q.defer();
+
+        $http.delete('http://localhost:3000/api/v1/deleteCompany/'+id)
+            .success(function (response, status, headers, config) {
+                deferred.resolve(response);
+            }).error(function (err, status, headers, config) {
+                deferred.reject(err);
+            });
+
+        return deferred.promise;
+    }
 }

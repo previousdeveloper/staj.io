@@ -101,7 +101,9 @@ router.get('/user', passport.authenticate('bearer', {session: false}), function 
             username: req.user.username,
             name: req.user.name,
             email: req.user.email,
-            role: req.user.role
+            role: req.user.role,
+            company: req.user.company
+
         });
     } else {
         return res.json({
@@ -140,29 +142,99 @@ router.post('/changePassword', passport.authenticate('bearer', {session: false})
 
 router.post('/addCompany', passport.authenticate('bearer', {session: false}), function (req, res) {
 
+    var companyId = req.body.companyId;
 
     if (req.user) {
         User.findOne({_id: req.user.id}, function (err, user) {
 
-            Company.findOne({_id: req.body.companyId}, function (err, company) {
-                if (err) {
-                    log.error('Finding  company :' + {_id: req.body.companyId} + err);
-                    return res.json(err);
-                } else {
-                    // user.followedCompanies.push(company);
-                    user.company.push(company._doc);
-                    user.save();
-                }
-            });
+
+            if (req.user._doc.company.length === 0) {
+                Company.findOne({_id: companyId}, function (err, company) {
+                    if (err) {
+                        log.error('Finding  company :' + {_id: companyId} + err);
+                        return res.json(err);
+                    } else {
+                        // user.followedCompanies.push(company);
+                        user.company.push(company._doc);
+                        user.save();
+
+                        return res.json({
+                            type: true,
+                            message: 'Sirket takip listesine eklendi'
+                        });
+
+                    }
+                });
+            } else {
+
+                User.find({
+                    'company': companyId
+                }, function (err, result) {
+
+                    if (result.length === 0) {
+
+                        Company.findOne({_id: req.body.companyId}, function (err, company) {
+                            if (err) {
+                                log.error('Finding  company :' + {_id: req.body.companyId} + err);
+                                return res.json(err);
+                            } else {
+                                // user.followedCompanies.push(company);
+                                user.company.push(company._doc);
+                                user.save();
+
+                                return res.json({
+                                    type: true,
+                                    message: 'Sirket takip listesine eklendi'
+                                });
+
+                            }
+                        });
+                    }
+                    if (result.length > 0) {
+                        return res.json({
+                            type: false,
+                            message: 'Sirket takip listesinde mevcut'
+                        });
+                    }
+
+                });
+
+            }
+
         });
     }
-    return res.json({
-        type: true,
-        message: 'Sirket takip listesine eklendi'
-    });
+
 });
 
 
+
+router.delete('/deleteCompany/:companyId', passport.authenticate('bearer', {session: false}), function (req, res) {
+    if (req.user) {
+        User.findOne({_id: req.user.id}, function (err, user) {
+
+            var companyId = req.params.companyId;
+
+            if (!err) {
+                Company.findOne({_id: companyId}, function (err, company) {
+                    if (err) {
+                        log.error('Finding  company :' + {_id: companyId} + err);
+                        return res.json(err);
+                    } else {
+                        // user.followedCompanies.push(company);
+                        user.company.remove(company);
+                        user.save();
+
+                        return res.json({
+                            type: true,
+                            message: 'Sirket takip listesinden cikarildi.'
+                        });
+
+                    }
+                });
+            }
+        });
+
+    }});
 router.post('/updateInformation', passport.authenticate('bearer', {session: false}), function (req, res) {
 
     if (req.user) {

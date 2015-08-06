@@ -22,7 +22,7 @@ height: 20px;
 }
 
 a:link, a:visited {
-color: #77BACE;
+color: black;
 text-decoration: none;
 }
 
@@ -897,3 +897,24 @@ font-size: 14px;}
 
     border-color: #333;
 }
+
+
+.panel-primary > .panel-heading.panel-left
+{
+    color: #fff;
+    background-color: #f05f40;
+}
+.panel-primay-left{
+    border-color:#f05f40;
+}
+.btn-filter-left{
+  background-color: #f05f40;
+  border: inherit;
+
+}
+
+.btn-search{
+    background-color: #f05f40;
+
+}
+

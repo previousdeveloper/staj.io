@@ -5,14 +5,15 @@ angular
     .controller('CompanyDetails', CompanyDetails);
 
 CompanyDetails.$inject = ['$scope', 'logger',
-    'companyDetailsService', 'toaster', 'DTOptionsBuilder', 'DTColumnDefBuilder', '$rootScope'];
+    'companyDetailsService', 'toaster', 'loginService', 'localStorageService'];
 
 function CompanyDetails($scope, logger,
-                        companyDetailsService, toaster, DTOptionsBuilder, DTColumnDefBuilder, $rootScope) {
+                        companyDetailsService, toaster, loginService, localStorageService) {
     /* jshint validthis: true */
     var vm = this;
     vm.searchInput = null;
-
+    vm.favoredResult = null;
+    vm.allCompany = [];
     vm.search = {
         q: ''
     };
@@ -36,11 +37,25 @@ function CompanyDetails($scope, logger,
                     }
                 }
 
+                angular.forEach(vm.allCompany, function (data, key) {
+
+                    angular.forEach(vm.favoredList, function (value, key) {
+                        if (data._id === value._id) {
+                            vm.favoredResult = true;
+                        } else {
+                            vm.favoredResult = false;
+                        }
+                    });
+
+
+                });
+
             },
             function (err) {
                 vm.allCompany = err;
             });
     };
+
 
     vm.getFilteredCompany = function (pageNumber, city, sector) {
         companyDetailsService.getFilteredCompany(pageNumber, city, sector).then(function (result) {
@@ -89,8 +104,74 @@ function CompanyDetails($scope, logger,
             });
     };
 
+    vm.deleteCompanyById = function (id) {
+
+        if (confirm('Favorilerden cikarmak istedigine emin misin ?')) {
+            companyDetailsService.deleteCompany(id).then(function (result) {
+
+                vm.deleteResult = result;
+                toaster.pop('success', "Sirket Takip Durumu", result.message);
+
+                getFavoredList();
+            });
+        } else {
+            // Do nothing!
+        }
+
+    };
+
+    vm.addSelectedCompany = function (id) {
+        vm.companyAddData = {
+            companyId: id
+        };
+        loginService.addCompany(vm.companyAddData).then(function (result) {
+
+            if (result.type) {
+                toaster.pop('success', "Sirket Takip Durumu", result.message);
+                getFavoredList();
+            } else {
+                toaster.pop('error', "Sirket Takip Durumu", result.message);
+
+            }
+
+            vm.result = result;
+        });
+    };
+
+    function getFavoredList(){
+        loginService.getFavoredList().then(function (data) {
+            vm.favoredList = data;
+        });
+    }
 
     function init() {
+
+
+        vm.isAuthed = function () {
+            var token = localStorageService.get('accessToken');
+            if (token) {
+
+                return true;
+
+            } else {
+
+                return false;
+
+            }
+        };
+
+
+        if (vm.isAuthed()) {
+            loginService.getCurrentUser().then(function (data) {
+
+                vm.currentDataUser = data;
+            });
+        }
+
+        if (vm.isAuthed()) {
+            getFavoredList();
+        }
+
 
         vm.allButtonCount = [];
         vm.allButtonCountFiltered = [];
@@ -112,6 +193,7 @@ function CompanyDetails($scope, logger,
             {id: 4, name: 'Endustri'},
             {id: 5, name: 'Kimya'}
         ];
+
 
     }
 
