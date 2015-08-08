@@ -110,7 +110,7 @@ function CompanyDetails($scope, logger,
             companyDetailsService.deleteCompany(id).then(function (result) {
 
                 vm.deleteResult = result;
-                toaster.pop('success', "Sirket Takip Durumu", result.message);
+                toaster.pop('success', "", result.message);
 
                 getFavoredList();
             });
@@ -120,23 +120,8 @@ function CompanyDetails($scope, logger,
 
     };
 
-    vm.addSelectedCompany = function (id) {
-        vm.companyAddData = {
-            companyId: id
-        };
-        loginService.addCompany(vm.companyAddData).then(function (result) {
 
-            if (result.type) {
-                toaster.pop('success', "Sirket Takip Durumu", result.message);
-                getFavoredList();
-            } else {
-                toaster.pop('error', "Sirket Takip Durumu", result.message);
 
-            }
-
-            vm.result = result;
-        });
-    };
 
     function getFavoredList(){
         loginService.getFavoredList().then(function (data) {
@@ -160,6 +145,26 @@ function CompanyDetails($scope, logger,
             }
         };
 
+        if(vm.isAuthed){
+
+            vm.addSelectedCompany = function (id) {
+                vm.companyAddData = {
+                    companyId: id
+                };
+                loginService.addCompany(vm.companyAddData).then(function (result) {
+
+                    if (result.type) {
+                        toaster.pop('success', "", result.message);
+                        getFavoredList();
+                    } else {
+                        toaster.pop('error', "", result.message);
+
+                    }
+
+                    vm.result = result;
+                });
+            };
+        }
 
         if (vm.isAuthed()) {
             loginService.getCurrentUser().then(function (data) {

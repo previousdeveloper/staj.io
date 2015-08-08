@@ -1,6 +1,6 @@
 process.env.NODE_ENV = 'test';
 
-var BASE_URL = "http://localhost:1400/api";
+var BASE_URL = "http://localhost:3000/api/v1";
 var should = require('chai').should(),
     expect = require('chai').expect,
     supertest = require('supertest'),
