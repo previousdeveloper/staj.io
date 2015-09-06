@@ -73,10 +73,7 @@ function configure($stateProvider, $urlRouterProvider, $httpProvider) {
                     toaster.pop('error', "Sirket Takip Durumu", 'Kullanici veya Paralo Yanlis.');
                     $location.url('/login');
                 }
-                if (response.status == 0) {
-                    window.location = "../admin/index.html#/signup";
-                    return;
-                }
+
                 if (response.status === 403) {
                     toaster.pop('error', "Giris", 'Kullanici veya Paralo Yanlis.');
                     $location.url('/login');
