@@ -4,6 +4,7 @@ angular.module('staj.io', [
 
     'company.module',
     'login.module',
+    'user.module',
     'blocks.logging',
     'blocks.exception',
     'ui.router',
