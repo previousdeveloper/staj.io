@@ -25,6 +25,7 @@ function UserCreateCtrl($scope, userCreateService, $location, toaster) {
 
                 if (result !== null & result !== undefined) {
 
+                    toaster.pop('info', 'Kayit', result.message);
                     $location.path('/login');
                 }
 

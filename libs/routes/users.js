@@ -168,7 +168,7 @@ router.post('/addCompany', passport.authenticate('bearer', {session: false}), fu
             } else {
 
                 User.find({
-                    'company': companyId
+                    'company._id': companyId
                 }, function (err, result) {
 
                     if (result.length === 0) {

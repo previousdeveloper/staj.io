@@ -4,9 +4,9 @@ angular
     .module('login.module')
     .controller('LoginCtrl', LoginCtrl);
 
-LoginCtrl.$inject = ['$scope', 'loginService', '$location', 'localStorageService', '$rootScope','$window','toaster'];
+LoginCtrl.$inject = ['$scope', 'loginService', '$location', 'localStorageService', '$rootScope', '$window', 'toaster'];
 
-function LoginCtrl($scope, loginService, $location, localStorageService, $rootScope,$window,toaster) {
+function LoginCtrl($scope, loginService, $location, localStorageService, $rootScope, $window, toaster) {
 
     var vm = this;
     vm.loginData = {
@@ -31,11 +31,11 @@ function LoginCtrl($scope, loginService, $location, localStorageService, $rootSc
                     localStorageService.set('refreshToken', result.refresh_token);
 
                     loginService.getCurrentUser().then(function (data) {
-                        localStorageService.set('username',data.username);
-                        localStorageService.set('userId',data.userId);
-                        localStorageService.set('name',data.name);
-                        localStorageService.set('email',data.email);
-                        localStorageService.set('company',data.company);
+                        localStorageService.set('username', data.username);
+                        localStorageService.set('userId', data.userId);
+                        localStorageService.set('name', data.name);
+                        localStorageService.set('email', data.email);
+                        localStorageService.set('company', data.company);
                     });
                     toaster.pop('success', "", 'Giris Basarili');
 
@@ -51,11 +51,15 @@ function LoginCtrl($scope, loginService, $location, localStorageService, $rootSc
     };
 
     vm.logout = function logout() {
-
+        toaster.pop('success', "", 'Cikis Basarili');
         localStorageService.remove('accessToken');
 
     };
 
+    vm.refresh = function () {
+        $location.path('http://localhost:8081/#/company');
+
+    };
 
     function init() {
         vm.isAuthed = function () {

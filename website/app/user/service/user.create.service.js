@@ -19,7 +19,8 @@ function userCreateService($http, $q) {
 
         var deferred = $q.defer();
 
-        $http.post('http://localhost:3000/api/v1/signup', data)
+        var url = 'http://localhost:3000';
+        $http.post(url + '/api/v1/signup', data)
             .success(function (data) {
                 deferred.resolve(data);
             }).error(function () {
