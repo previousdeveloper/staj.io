@@ -6,6 +6,7 @@ Türkiyede stajyer alan firmaların bilgileri listeleyen bir servistir.
 
 ### Staj
 [![Build Status](https://magnum-ci.com/status/962be120e085cfec6a6660ce3d5202f7.png)](https://magnum-ci.com/projects/2624)   [![Gittip](http://img.shields.io/gratipay/previousdeveloper.svg)](https://www.gittip.com/previousdeveloper/)
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 
 ## Run server
